@@ -8,8 +8,11 @@ public class Invader : MonoBehaviour
     [SerializeField] private Bullet bulletPrefab = null;
     [SerializeField] private Transform shootAt = null;
     [SerializeField] private string collideWithTag = "Player";
-    [SerializeField] private int Pv = 100;
+    [SerializeField] private int Pv;
     [SerializeField] private int Dommage = 10;
+    [SerializeField] private int PvMax = 100;
+    [SerializeField] private int PvStateMid;
+    [SerializeField] private int PvStateLow;
 
     internal Action<Invader> onDestroy;
     
@@ -22,6 +25,13 @@ public class Invader : MonoBehaviour
     }
     InvaderState state = InvaderState.MoveFull;
     public Vector2Int GridIndex { get; private set; }
+
+    private void Start()
+    {
+        Pv = PvMax;
+        PvStateLow = PvMax / 4;
+        PvStateMid = PvMax / 2;
+    }
 
     public void Initialize(Vector2Int gridIndex)
     {
@@ -44,11 +54,11 @@ public class Invader : MonoBehaviour
     private void GetHit()
     {
         Pv -= Dommage;
-        if (Pv < 50)
+        if (Pv <= PvStateMid && Pv > PvStateLow)
         {
             state = InvaderState.MoveMid;
         }
-        if (Pv < 25)
+        if (Pv <= PvStateLow && Pv > 0)
         {
             state = InvaderState.MoveLow;
         }
