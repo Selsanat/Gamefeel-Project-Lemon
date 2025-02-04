@@ -8,6 +8,8 @@ public class Invader : MonoBehaviour
     [SerializeField] private Bullet bulletPrefab = null;
     [SerializeField] private Transform shootAt = null;
     [SerializeField] private string collideWithTag = "Player";
+    [SerializeField] private int Pv = 100;
+    [SerializeField] private int Dommage = 10;
 
     internal Action<Invader> onDestroy;
 
@@ -26,9 +28,18 @@ public class Invader : MonoBehaviour
     public void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.gameObject.tag != collideWithTag) { return; }
-
-        Destroy(gameObject);
+        
+        GetHit();
         Destroy(collision.gameObject);
+    }
+
+    private void GetHit()
+    {
+        Pv -= Dommage;
+        if(Pv <= 0)
+        {
+            Destroy(gameObject);
+        }
     }
 
     public void Shoot()
