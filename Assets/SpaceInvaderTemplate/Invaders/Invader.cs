@@ -11,8 +11,11 @@ public class Invader : MonoBehaviour
     [SerializeField] private int Pv;
     [SerializeField] private int Dommage = 10;
     [SerializeField] private int PvMax = 100;
-    [SerializeField] private int PvStateMid;
-    [SerializeField] private int PvStateLow;
+    [SerializeField] private int PvPourcentLow = 30;   
+    [SerializeField] private int PvPourcentMid = 50;
+    private int PvStateMid;
+    private int PvStateLow;
+    
 
     internal Action<Invader> onDestroy;
     
@@ -29,8 +32,8 @@ public class Invader : MonoBehaviour
     private void Start()
     {
         Pv = PvMax;
-        PvStateLow = PvMax / 4;
-        PvStateMid = PvMax / 2;
+        PvStateMid = PvMax * PvPourcentMid / 100;
+        PvStateLow = PvMax * PvPourcentLow / 100;
     }
 
     public void Initialize(Vector2Int gridIndex)
