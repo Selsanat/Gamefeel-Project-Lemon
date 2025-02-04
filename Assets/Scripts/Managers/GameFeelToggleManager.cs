@@ -13,7 +13,17 @@ public class GameFeelToggleManager : MonoBehaviour
         public bool enabled;
         public AGameFeelModule module;
     }
-    public GameFeelFeature[] gameFeelObjects;
+    public GameFeelFeature[] gameFeelObjects = new GameFeelFeature[1];
+
+    private void Start()
+    {
+        GameFeelFeature test = new GameFeelFeature();
+        test.key = KeyCode.A;
+        test.enabled = true;
+        test.module = null;
+        gameFeelObjects.Initialize();
+        gameFeelObjects[0] = test;
+    }
 
     private void Update()
     {
@@ -27,14 +37,15 @@ public class GameFeelToggleManager : MonoBehaviour
         {
             if (Input.GetKeyDown(gameFeelObjects[i].key))
             {
+                Debug.Log("Key:" + gameFeelObjects[i].key + " enabled:" + gameFeelObjects[i].enabled);
+
                 gameFeelObjects[i].enabled = !gameFeelObjects[i].enabled;
                 
-                if (gameFeelObjects[i].enabled)
+                if (gameFeelObjects[i].enabled && gameFeelObjects[i].module != null)
                     gameFeelObjects[i].module.ToggleOffGamefeelFeatures();
-                else
+                else if(!gameFeelObjects[i].enabled && gameFeelObjects[i].module != null)
                     gameFeelObjects[i].module.ToggleOnGamefeelFeatures();
                 
-                Debug.Log("Key:" + gameFeelObjects[i].key + " enabled:" + gameFeelObjects[i].enabled);
             }
         }
     }
