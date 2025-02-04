@@ -248,7 +248,7 @@ MonoBehaviour:
   speed: 4
   bulletPrefab: {fileID: 7369880722360228486, guid: 42269f87d33f3eb4898473401db125ae, type: 3}
   shootAt: {fileID: 495127406}
-  shootCooldown: 0.3
+  shootCooldown: 0.05
   collideWithTag: Untagged
 --- !u!212 &582271455
 SpriteRenderer:
