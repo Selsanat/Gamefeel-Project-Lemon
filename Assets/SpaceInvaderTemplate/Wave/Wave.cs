@@ -183,6 +183,7 @@ public class Wave : MonoBehaviour
     /// </summary>
     void RemoveInvader(Invader invader)
     {
+        EventsManager.Instance.OnEnnemyKilled.Invoke();
         invaders.Remove(invader);
 
         int indexColumn = invaderPerColumn.FindIndex(x => x.id == invader.GridIndex.x);

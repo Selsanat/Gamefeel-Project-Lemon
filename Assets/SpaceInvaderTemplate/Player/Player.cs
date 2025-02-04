@@ -43,6 +43,7 @@ public class Player : MonoBehaviour
     {
         Instantiate(bulletPrefab, shootAt.position, Quaternion.identity);
         lastShootTimestamp = Time.time;
+        EventsManager.Instance.OnShoot.Invoke();
     }
 
     public void OnTriggerEnter2D(Collider2D collision)
@@ -50,5 +51,6 @@ public class Player : MonoBehaviour
         if (collision.gameObject.tag != collideWithTag) { return; }
 
         GameManager.Instance.PlayGameOver();
+        EventsManager.Instance.OnGameOver.Invoke();
     }
 }
