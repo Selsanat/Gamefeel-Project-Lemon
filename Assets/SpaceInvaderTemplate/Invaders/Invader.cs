@@ -67,10 +67,12 @@ public class Invader : MonoBehaviour
         if (Pv <= PvStateMid && Pv > PvStateLow)
         {
             state = InvaderState.MoveMid;
+            AnimSwitch();
         }
         if (Pv <= PvStateLow && Pv > 0)
         {
             state = InvaderState.MoveLow;
+            AnimSwitch();
         }
         if(Pv <= 0)
         {
