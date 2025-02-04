@@ -7,22 +7,19 @@ using UnityEngine.XR;
 
 public class GameFeelToggleManager : MonoBehaviour
 {
-    public struct GameFeelFeature
+    [System.Serializable]
+    public class GameFeelFeature
     {
         public KeyCode key;
         public bool enabled;
         public AGameFeelModule module;
     }
-    public GameFeelFeature[] gameFeelObjects = new GameFeelFeature[1];
+    [SerializeField]
+    public GameFeelFeature[] gameFeelObjects;
 
     private void Start()
     {
-        GameFeelFeature test = new GameFeelFeature();
-        test.key = KeyCode.A;
-        test.enabled = true;
-        test.module = null;
         gameFeelObjects.Initialize();
-        gameFeelObjects[0] = test;
     }
 
     private void Update()
