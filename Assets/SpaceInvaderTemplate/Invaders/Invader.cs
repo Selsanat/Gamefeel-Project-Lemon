@@ -12,7 +12,15 @@ public class Invader : MonoBehaviour
     [SerializeField] private int Dommage = 10;
 
     internal Action<Invader> onDestroy;
-
+    
+    enum InvaderState
+    {
+        MoveFull,
+        MoveMid,
+        MoveLow,
+        Shoot
+    }
+    InvaderState state = InvaderState.MoveFull;
     public Vector2Int GridIndex { get; private set; }
 
     public void Initialize(Vector2Int gridIndex)
@@ -36,9 +44,30 @@ public class Invader : MonoBehaviour
     private void GetHit()
     {
         Pv -= Dommage;
+        if (Pv < 50)
+        {
+            state = InvaderState.MoveMid;
+        }
+        if (Pv < 25)
+        {
+            state = InvaderState.MoveLow;
+        }
         if(Pv <= 0)
         {
             Destroy(gameObject);
+        }
+    }
+
+    private void AnimSwitch()
+    {
+        switch (state)
+        {
+            case InvaderState.MoveLow:
+                break;
+            case InvaderState.MoveMid:
+                break;
+            case InvaderState.MoveFull:
+                break;
         }
     }
 
