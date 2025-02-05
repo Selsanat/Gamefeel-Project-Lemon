@@ -30,6 +30,9 @@ public class Wave : MonoBehaviour
 
     // Distance moved when moving downward
     [SerializeField] private float downStep = 1f;
+    private bool changeDirection = false;
+    private Vector2 BasePosition;
+
 
     private Bounds Bounds => new Bounds(transform.position, new Vector3(bounds.x, bounds.y, 1000f));
 
@@ -78,7 +81,8 @@ public class Wave : MonoBehaviour
 
     void Update()
     {
-        UpdateMovement();
+        NewUpdateMovement();
+        //UpdateMovement();
         UpdateShoot();
     }
 
@@ -97,6 +101,61 @@ public class Wave : MonoBehaviour
 
         shootCooldown += Random.Range(shootRandom.x, shootRandom.y);
     }
+
+    void NewUpdateMovement()
+    {
+        if (invaders.Count <= 0)
+        {
+            return;
+        }
+        
+        float t = 1f - (invaders.Count - 1) / (float)((rows * columns) - 1);
+        float speed = Mathf.Lerp(speedMin, speedMax, difficultyProgress.Evaluate(t));
+        float delta = speed * Time.deltaTime;
+
+        Vector3 downDirection = Vector3.down;
+        if (changeDirection)
+        {
+            if(BasePosition == Vector2.zero)
+            {
+                BasePosition = invaders[0].transform.position + downDirection;
+            }
+            foreach (var invader in invaders)
+            {
+                if (invaders[0].transform.position.y < BasePosition.y)
+                {
+                    changeDirection = false;
+                    move = move == Move.Right ? Move.Left : Move.Right;
+                    BasePosition = Vector2.zero;
+                    float bottom = GetRowPosition(invaderPerRow[0].id);
+                    if (GameManager.Instance.IsBelowGameOver(bottom))
+                    {
+                        GameManager.Instance.PlayGameOver();
+                    }
+                    break;
+
+                }
+                invader.transform.position += downDirection * delta;
+                
+            }
+            return;
+        }
+        // Speed depends on remaining invaders ratio
+        foreach (var invader in invaders)
+        {
+            Vector3 direction = directions[(int)move];
+            invader.transform.position += direction * delta;
+            // Check if the invader has reached the edge of the screen
+            if (!GameManager.Instance.IsInBounds(invader.transform.position.x, move == Move.Right ? GameManager.DIRECTION.Right : GameManager.DIRECTION.Left))
+            {
+                changeDirection = true;
+            }   
+        }
+
+        
+            
+    }
+
 
     void UpdateMovement()
     {
