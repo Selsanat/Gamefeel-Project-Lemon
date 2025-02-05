@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 public class Bullet : MonoBehaviour
@@ -10,11 +11,6 @@ public class Bullet : MonoBehaviour
     private float elapsed = 0f;
 
     // Start is called before the first frame update
-    //void Awake()
-    //{
-    //    Rigidbody2D rb = GetComponent<Rigidbody2D>();
-    //    rb.velocity = startVelocity;
-    //}
     void Update()
     {
         elapsed += Time.deltaTime;
