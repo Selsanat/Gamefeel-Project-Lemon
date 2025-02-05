@@ -200,8 +200,6 @@ public class Wave : MonoBehaviour
 
         globalSequence.OnComplete(() =>
         {
-           
-
             if(direction == Vector3.right)
             {
                 direction = Vector3.left;
