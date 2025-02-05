@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 public class Wave : MonoBehaviour
@@ -30,14 +31,15 @@ public class Wave : MonoBehaviour
 
     // Distance moved when moving downward
     [SerializeField] private float downStep = 1f;
-    [SerializeField] AnimationCurve speedOverTime;
     private bool changeDirection = false;
     private Vector2 BasePosition;
     private float elapsed = 0f;
+    private Vector3 direction = Vector3.right;
     float distBtwInvaders = 0;
     float lenghtInvaders = 0;
     float lenghtInvader = 0;
-
+    private bool isFirstSequence = true;
+    private float invaderSpacing;
 
 
 
@@ -59,15 +61,17 @@ public class Wave : MonoBehaviour
 
     void Awake()
     {
+        DOTween.Init();
         shootCooldown = timeBeforeFirstShoot;
 
         for (int i = 0; i < columns; i++)
         {
-            invaderPerColumn.Add(new() { id = i, invaders= new() });
+            invaderPerColumn.Add(new() { invaders= new() });
+            Debug.Log("invaderPerColumn: " + invaderPerColumn[i].invaders);
         }
         for (int i = 0; i < rows; i++)
         {
-            invaderPerRow.Add(new() { id = i, invaders = new() });
+            invaderPerRow.Add(new() { invaders = new() });
         }
 
         // Spaw the invader grid
@@ -87,7 +91,8 @@ public class Wave : MonoBehaviour
         lenghtInvaders = invaders[0].transform.position.x - invaders[^1].transform.position.x;
         distBtwInvaders = invaders[0].transform.position.x - invaders[1].transform.position.x;
         lenghtInvader = invaders[0].GetComponent<Renderer>().bounds.size.x;
-        
+        if (columns > 1)
+            invaderSpacing = Mathf.Abs(invaders[1].transform.position.x - invaders[0].transform.position.x);
     }
 
     void Update()
@@ -114,69 +119,7 @@ public class Wave : MonoBehaviour
         shootCooldown += Random.Range(shootRandom.x, shootRandom.y);
     }
 
-    void LastUpdateMovement()
-    {
-       if (invaders.Count <= 0)
-    {
-        return;
-    }
-
-    float t = 1f - (invaders.Count - 1) / (float)((rows * columns) - 1);
-    float speedBase = Mathf.Lerp(speedMin, speedMax, difficultyProgress.Evaluate(t));
-    float delta;
-
-    Vector3 downDirection = Vector3.down;
-    if (changeDirection)
-    {
-        if (BasePosition == Vector2.zero)
-        {
-            BasePosition = invaders[0].transform.position + downDirection;
-        }
-        foreach (var invader in invaders)
-        {
-            if (invaders[0].transform.position.y < BasePosition.y)
-            {
-                changeDirection = false;
-                move = move == Move.Right ? Move.Left : Move.Right;
-                BasePosition = Vector2.zero;
-                float bottom = GetRowPosition(invaderPerRow[0].id);
-                invader.BasePosition = invader.transform.position;
-                if (GameManager.Instance.IsBelowGameOver(bottom))
-                {
-                    GameManager.Instance.PlayGameOver();
-                }
-                break;
-            }
-            invader.transform.position += downDirection * speedBase * Time.deltaTime;
-        }
-        return;
-    }
-
-    foreach (var invader in invaders)
-    {
-        GameManager.DIRECTION side = move == Move.Right ? GameManager.DIRECTION.Right : GameManager.DIRECTION.Left;
-        Vector3 direction = directions[(int)move];
-
-        // Calcule la distance parcourue par l'invader par rapport à sa position de base
-        float distanceTraveled = Vector3.Distance(invader.BasePosition, invader.transform.position);
-        float totalDistance = Vector3.Distance(invader.BasePosition, invader.TargetPosition);
-
-        // Utilise cette distance pour évaluer la courbe speedOverTime
-        float distanceFactor = speedOverTime.Evaluate(distanceTraveled / totalDistance);
-        float speed = speedBase * distanceFactor;
-
-        delta = speed * Time.deltaTime;
-        invader.transform.position += direction * delta;
-
-        // Vérifie si l'invader a atteint le bord de l'écran
-        if (!GameManager.Instance.IsInBounds(invader.transform.position.x, side))
-        {
-            changeDirection = true;
-        }
-    
-    }
         
-}
     void NewUpdateMovement()
     {
         if (invaders.Count <= 0)
@@ -184,11 +127,8 @@ public class Wave : MonoBehaviour
             return;
         }
         
-        float t = 1f - (invaders.Count - 1) / (float)((rows * columns) - 1);
-        float speed = Mathf.Lerp(speedMin, speedMax, difficultyProgress.Evaluate(t));
-        float speedBase = Mathf.Lerp(speedMin, speedMax, difficultyProgress.Evaluate(t));
-        speed = speedBase * speedOverTime.Evaluate(elapsed);
-        float delta;
+        float time = 1f - (invaders.Count - 1) / (float)((rows * columns) - 1);
+        float speed = Mathf.Lerp(speedMin, speedMax, difficultyProgress.Evaluate(time));
 
         Vector3 downDirection = Vector3.down;
         if (changeDirection)
@@ -210,6 +150,8 @@ public class Wave : MonoBehaviour
                     {
                         GameManager.Instance.PlayGameOver();
                     }
+                    isFirstSequence = true;
+
                     break;
 
                 }
@@ -219,113 +161,62 @@ public class Wave : MonoBehaviour
             return;
         }
         // Speed depends on remaining invaders ratio
-        
-        foreach (var invader in invaders)
+        if (!isFirstSequence)
+            return;
+        isFirstSequence = false;
+        if (invaders.Count <= 0) return;
+
+        float t = 1f - (invaders.Count - 1) / (float)((rows * columns) - 1);
+        float speedBase = Mathf.Lerp(speedMin, speedMax, difficultyProgress.Evaluate(t));
+
+         
+        float movementDistance = direction.x * distBtwInvaders * columns;
+
+        Sequence globalSequence = DOTween.Sequence();
+
+        for (int col = 0; col < columns; col++)
         {
-            GameManager.DIRECTION side = move == Move.Right ? GameManager.DIRECTION.Right : GameManager.DIRECTION.Left;
-            Vector3 direction = directions[(int)move];
-            
-            elapsed = GameManager.Instance.HowFarOutOfBounds(invader.transform.position.x, side);
-            speed = speedBase;
-            
-            if (direction == Vector3.left)
+            List<Invader> column = invaderPerColumn[col].invaders;
+            float columnDelay = col * 0.1f; // Délai progressif entre les colonnes
+
+            foreach (var invader in column)
             {
-                float columnFactor = Mathf.Lerp(0, speedBase, invader.GridIndex.x / (float)(columns - 1));
-                if (invader.transform.position.x <= (Bounds.min.x + Bounds.max.x) / 2)
+                float finalXPosition = invader.transform.position.x + movementDistance;
+                
+                if(direction == Vector3.right)
+                    finalXPosition = 7.5f -  movementDistance;
+                else
                 {
-                    speed = Mathf.Lerp(speedBase, speed,
-                        invader.transform.position.x - (Bounds.min.x + Bounds.max.x) / 2);
+                    Debug.Log("left");
+                    finalXPosition = -7.5f + movementDistance;
                 }
-                speed += columnFactor;
+                // Déplacer chaque invader en respectant l'espacement initial
+                globalSequence.Insert(columnDelay, 
+                    invader.transform.DOMoveX(finalXPosition, 4f)
+                        .SetEase(Ease.OutCirc)
+                );
+            }
+        }
+
+        globalSequence.OnComplete(() =>
+        {
+           
+
+            if(direction == Vector3.right)
+            {
+                direction = Vector3.left;
             }
             else
             {
-                float columnFactor = Mathf.Lerp(0f, 1f, invader.GridIndex.x / (float)(columns - 1));
-                if (invader.transform.position.x >= (Bounds.min.x + Bounds.max.x) / 2)
-                {
-                    Mathf.Lerp(1f, 0f,
-                        invader.transform.position.x - (Bounds.min.x + Bounds.max.x) / 2);
-                }
-                speed += columnFactor;
+                direction = Vector3.right;
             }
+            changeDirection = true;
             
-            delta = speed * Time.deltaTime;
-            invader.transform.position += direction * delta;
-            
-            // Check if the invader has reached the edge of the screen
-            if (!GameManager.Instance.IsInBounds(invader.transform.position.x, move == Move.Right ? GameManager.DIRECTION.Right : GameManager.DIRECTION.Left))
-            {
-                changeDirection = true;
-            }   
-        }
-
+            Debug.Log("finisg");
+        });
         
+            // Check if the invader has reached the edge of the screen
             
-    }
-
-
-    void UpdateMovement()
-    {
-        if(invaders.Count <= 0) { return; }
-
-        // Speed depends on remaining invaders ratio
-        float t = 1f - (invaders.Count - 1) / (float)((rows * columns) - 1);
-        float speed = Mathf.Lerp(speedMin, speedMax, difficultyProgress.Evaluate(t));
-
-        Vector3 direction = directions[(int)move];
-        float delta = speed * Time.deltaTime;
-        distance += delta;
-
-        switch (move)
-        {
-            case Move.Right:
-                {
-                    // Get the last non-empty column position
-                    float right = GetColumnPosition(invaderPerColumn[^1].id);
-                    float nextRight = right + delta;
-                    // Check if position will be out of game bound after beeing moved
-                    if (!GameManager.Instance.IsInBounds(nextRight, GameManager.DIRECTION.Right))
-                    {
-                        // Adjust "delta" to keep invaders exactly in bounds
-                        delta = GameManager.Instance.KeepInBounds(nextRight, GameManager.DIRECTION.Right) - right;
-                        BeginNextMove();
-                    }
-                    break;
-                }
-            case Move.Left:
-                {
-                    // Get the first non-empty column position
-                    float left = GetColumnPosition(invaderPerColumn[0].id);
-                    float nextLeft = left + delta;
-                    // Check if position will be out of game bound after beeing moved
-                    if (!GameManager.Instance.IsInBounds(nextLeft, GameManager.DIRECTION.Left))
-                    {
-                        // Adjust "delta" to keep invaders exactly in bounds
-                        delta = GameManager.Instance.KeepInBounds(nextLeft, GameManager.DIRECTION.Left) - left;
-                        BeginNextMove();
-                    }
-                    break;
-                }
-            case Move.Down:
-                {
-                    float bottom = GetRowPosition(invaderPerRow[0].id);
-                    if (GameManager.Instance.IsBelowGameOver(bottom))
-                    {
-                        GameManager.Instance.PlayGameOver();
-                    }
-
-                    if(distance >= downStep)
-                    {
-                        // Adjust "delta" to place invaders exactly at end of downStep
-                        delta -= (distance - downStep);
-                        BeginNextMove();
-                    }
-                    break;
-                }
-        }
-
-        // Move invaders with adjusted delta.
-        transform.position = transform.position + direction * delta;
     }
 
     void BeginNextMove()
