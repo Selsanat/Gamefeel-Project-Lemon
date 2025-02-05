@@ -100,6 +100,39 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startVelocity: {x: 0, y: 12, z: 0}
+  speedOverTime:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0.019508362
+      value: 0.6080017
+      inSlope: 0.73974746
+      outSlope: 0.73974746
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.20048988
+      value: 0.7418823
+      inSlope: 4.908903
+      outSlope: 4.908903
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.5469818
+      value: 3.8873568
+      inSlope: 9.078059
+      outSlope: 9.078059
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!58 &7187537139655989992
 CircleCollider2D:
   m_ObjectHideFlags: 0
