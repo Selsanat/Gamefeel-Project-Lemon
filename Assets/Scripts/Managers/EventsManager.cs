@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -35,6 +36,10 @@ public class EventsManager : MonoBehaviour
     {
         print("Shooting");
         SoundManager.instance.PlayRandomClip("Gun");
+        // make the camera shake using dotween
+        CameraManager instance = CameraManager.instance;
+        if (DOTween.IsTweening(Camera.main.transform)) return;
+        Camera.main.transform.DOShakePosition(instance.ShootShakeDuration, instance.ShootShakePower);
     }
 
     public static EventsManager Instance
