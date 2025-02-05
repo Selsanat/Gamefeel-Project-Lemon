@@ -19,9 +19,7 @@ public class CameraShake : MonoBehaviour
     
     public void Shake()
     {
-        return;
-        transform.DOShakePosition(duration, strength, vibrato, randomness).OnComplete(() => transform.position = originalPosition);;
-        
+        transform.DOShakePosition(duration, strength, vibrato, randomness).OnComplete(() => transform.position = originalPosition);
     }
     
     

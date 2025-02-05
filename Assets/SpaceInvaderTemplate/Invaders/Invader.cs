@@ -25,9 +25,9 @@ public class Invader : MonoBehaviour
     [SerializeField] private float GrowLow = 2.5f;
     [SerializeField] private float GrowSpeed = 1f;
     [SerializeField] private float DurationScaleHit = 0.2f;
-    [SerializeField] private float ScaleMutiplicatorHit = 2f;
+    [SerializeField] private float ScaleMutiplicatorHitY = 2f;
+    [SerializeField] private float ScaleMutiplicatorHitX = 2f;
     public Vector3 BasePosition;
-    public Vector3 TargetPosition;
     internal Action<Invader> onDestroy;
     private CameraShake cameraShake;
     private float BaseScaleX;
@@ -96,9 +96,9 @@ public class Invader : MonoBehaviour
 
     private void AnimHit()
     {
-        transform.DOScaleX(this.transform.localScale.x * ScaleMutiplicatorHit, DurationScaleHit);
+        transform.DOScaleX(this.transform.localScale.x * ScaleMutiplicatorHitX, DurationScaleHit);
         transform.DOScaleX(BaseScaleX, DurationScaleHit);
-        transform.DOScaleY(this.transform.localScale.y * -ScaleMutiplicatorHit, DurationScaleHit);
+        transform.DOScaleY(this.transform.localScale.y * -ScaleMutiplicatorHitY, DurationScaleHit);
         transform.DOScaleY(BaseScaleY, DurationScaleHit);
         
     }

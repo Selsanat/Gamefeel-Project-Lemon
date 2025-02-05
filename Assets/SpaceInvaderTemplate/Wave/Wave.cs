@@ -33,6 +33,9 @@ public class Wave : MonoBehaviour
 
     // Distance moved when moving downward
     [SerializeField] private float downStep = 1f;
+    [SerializeField] private float TimeToCross = 5f;
+    [SerializeField] private float EndPositionRight = 7.5f;
+    [SerializeField] private float EndPositionLeft = -7.5f;
     private bool changeDirection = false;
     private Vector2 BasePosition;
     private float elapsed = 0f;
@@ -101,9 +104,7 @@ public class Wave : MonoBehaviour
 
     void Update()
     {
-        //LastUpdateMovement();
-        //NewUpdateMovement();
-        //UpdateMovement();
+        UpdateMovement();
         UpdateShoot();
     }
 
@@ -124,7 +125,7 @@ public class Wave : MonoBehaviour
     }
 
         
-    void NewUpdateMovement()
+    void UpdateMovement()
     {
         if (invaders.Count <= 0)
         {
@@ -170,10 +171,6 @@ public class Wave : MonoBehaviour
         isFirstSequence = false;
         if (invaders.Count <= 0) return;
 
-        float t = 1f - (invaders.Count - 1) / (float)((rows * columns) - 1);
-        float speedBase = Mathf.Lerp(speedMin, speedMax, difficultyProgress.Evaluate(t));
-
-         
         float movementDistance = direction.x * distBtwInvaders * columns;
 
         Sequence globalSequence = DOTween.Sequence();
@@ -188,15 +185,15 @@ public class Wave : MonoBehaviour
                 float finalXPosition = invader.transform.position.x + movementDistance;
                 
                 if(direction == Vector3.right)
-                    finalXPosition = 7.5f -  movementDistance;
+                    finalXPosition = EndPositionRight -  movementDistance;
                 else
                 {
                     Debug.Log("left");
-                    finalXPosition = -7.5f + movementDistance;
+                    finalXPosition = EndPositionLeft + movementDistance;
                 }
                 // Déplacer chaque invader en respectant l'espacement initial
                 globalSequence.Insert(columnDelay, 
-                    invader.transform.DOMoveX(finalXPosition, 4f)
+                    invader.transform.DOMoveX(finalXPosition, TimeToCross)
                         .SetEase(Ease.OutCirc)
                 );
             }
@@ -217,25 +214,10 @@ public class Wave : MonoBehaviour
             Debug.Log("finisg");
         });
         
-            // Check if the invader has reached the edge of the screen
             
     }
 
-    void BeginNextMove()
-    {
-        // "moveCount" keep tracks on the number of move steps invaders have already made to know if we need to go left or right when finishing going downward
-        moveCount++;
-        switch (move)
-        {
-            case Move.Down:
-                move = (moveCount / 2) % 2 == 0 ? Move.Right : Move.Left; break;
-            case Move.Right:
-            case Move.Left:
-            default: 
-                move = Move.Down; break;
-        }
-        distance = 0f;
-    }
+    
 
     /// <summary>
     /// Removing an invader from the wave will remove it from "invaders", "invaderPerColumn" and "invaderPerRow". If a column or a row is empty, it will be removed.
