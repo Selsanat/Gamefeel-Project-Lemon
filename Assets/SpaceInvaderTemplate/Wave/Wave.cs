@@ -30,8 +30,11 @@ public class Wave : MonoBehaviour
 
     // Distance moved when moving downward
     [SerializeField] private float downStep = 1f;
+    [SerializeField] AnimationCurve speedOverTime;
     private bool changeDirection = false;
     private Vector2 BasePosition;
+    private float elapsed = 0f;
+
 
 
     private Bounds Bounds => new Bounds(transform.position, new Vector3(bounds.x, bounds.y, 1000f));
@@ -111,7 +114,9 @@ public class Wave : MonoBehaviour
         
         float t = 1f - (invaders.Count - 1) / (float)((rows * columns) - 1);
         float speed = Mathf.Lerp(speedMin, speedMax, difficultyProgress.Evaluate(t));
-        float delta = speed * Time.deltaTime;
+        float speedBase = Mathf.Lerp(speedMin, speedMax, difficultyProgress.Evaluate(t));
+        speed = speedBase * speedOverTime.Evaluate(elapsed);
+        float delta;
 
         Vector3 downDirection = Vector3.down;
         if (changeDirection)
@@ -135,7 +140,7 @@ public class Wave : MonoBehaviour
                     break;
 
                 }
-                invader.transform.position += downDirection * delta;
+                invader.transform.position += downDirection * speed * Time.deltaTime;
                 
             }
             return;
@@ -143,7 +148,11 @@ public class Wave : MonoBehaviour
         // Speed depends on remaining invaders ratio
         foreach (var invader in invaders)
         {
+            GameManager.DIRECTION side = move == Move.Right ? GameManager.DIRECTION.Right : GameManager.DIRECTION.Left;
             Vector3 direction = directions[(int)move];
+            elapsed = GameManager.Instance.HowFarOutOfBounds(invader.transform.position.x, side);
+            speed = speedBase * speedOverTime.Evaluate(elapsed);
+            delta = speed * Time.deltaTime;
             invader.transform.position += direction * delta;
             // Check if the invader has reached the edge of the screen
             if (!GameManager.Instance.IsInBounds(invader.transform.position.x, move == Move.Right ? GameManager.DIRECTION.Right : GameManager.DIRECTION.Left))

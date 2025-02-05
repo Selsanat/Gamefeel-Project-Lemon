@@ -62,6 +62,17 @@ public class GameManager : MonoBehaviour
             default: return false;
         }
     }
+    public float HowFarOutOfBounds(float position, DIRECTION side)
+    {
+        switch (side)
+        {
+            case DIRECTION.Right: return Bounds.max.x - position;
+            case DIRECTION.Up: return Bounds.max.y - position;
+            case DIRECTION.Left: return position - Bounds.min.x;
+            case DIRECTION.Down: return position - Bounds.min.y;
+            default: return 0f;
+        }
+    }
 
     public bool IsBelowGameOver(float position)
     {        
