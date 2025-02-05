@@ -39,7 +39,6 @@ public class Player : MonoBehaviour
 
     void UpdateActions()
     {
-        print(elapsedWindup);
         if (Input.GetKey(KeyCode.Space))
         {
             if (elapsedWindup == 0)
