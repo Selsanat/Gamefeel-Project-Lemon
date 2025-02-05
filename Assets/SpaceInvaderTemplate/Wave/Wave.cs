@@ -34,6 +34,10 @@ public class Wave : MonoBehaviour
     private bool changeDirection = false;
     private Vector2 BasePosition;
     private float elapsed = 0f;
+    float distBtwInvaders = 0;
+    float lenghtInvaders = 0;
+    float lenghtInvader = 0;
+
 
 
 
@@ -74,16 +78,21 @@ public class Wave : MonoBehaviour
                 Invader invader = GameObject.Instantiate<Invader>(invaderPrefab, GetPosition(i, j), Quaternion.identity, transform);
                 invader.Initialize(new Vector2Int(i, j));
                 invader.onDestroy += RemoveInvader;
+                invader.BasePosition = invader.transform.position;
                 invaders.Add(invader);
                 invaderPerColumn[i].invaders.Add(invader);
                 invaderPerRow[j].invaders.Add(invader);
             }
         }
+        lenghtInvaders = invaders[0].transform.position.x - invaders[^1].transform.position.x;
+        distBtwInvaders = invaders[0].transform.position.x - invaders[1].transform.position.x;
+        lenghtInvader = invaders[0].GetComponent<Renderer>().bounds.size.x;
         
     }
 
     void Update()
     {
+        //LastUpdateMovement();
         NewUpdateMovement();
         //UpdateMovement();
         UpdateShoot();
@@ -105,6 +114,69 @@ public class Wave : MonoBehaviour
         shootCooldown += Random.Range(shootRandom.x, shootRandom.y);
     }
 
+    void LastUpdateMovement()
+    {
+       if (invaders.Count <= 0)
+    {
+        return;
+    }
+
+    float t = 1f - (invaders.Count - 1) / (float)((rows * columns) - 1);
+    float speedBase = Mathf.Lerp(speedMin, speedMax, difficultyProgress.Evaluate(t));
+    float delta;
+
+    Vector3 downDirection = Vector3.down;
+    if (changeDirection)
+    {
+        if (BasePosition == Vector2.zero)
+        {
+            BasePosition = invaders[0].transform.position + downDirection;
+        }
+        foreach (var invader in invaders)
+        {
+            if (invaders[0].transform.position.y < BasePosition.y)
+            {
+                changeDirection = false;
+                move = move == Move.Right ? Move.Left : Move.Right;
+                BasePosition = Vector2.zero;
+                float bottom = GetRowPosition(invaderPerRow[0].id);
+                invader.BasePosition = invader.transform.position;
+                if (GameManager.Instance.IsBelowGameOver(bottom))
+                {
+                    GameManager.Instance.PlayGameOver();
+                }
+                break;
+            }
+            invader.transform.position += downDirection * speedBase * Time.deltaTime;
+        }
+        return;
+    }
+
+    foreach (var invader in invaders)
+    {
+        GameManager.DIRECTION side = move == Move.Right ? GameManager.DIRECTION.Right : GameManager.DIRECTION.Left;
+        Vector3 direction = directions[(int)move];
+
+        // Calcule la distance parcourue par l'invader par rapport à sa position de base
+        float distanceTraveled = Vector3.Distance(invader.BasePosition, invader.transform.position);
+        float totalDistance = Vector3.Distance(invader.BasePosition, invader.TargetPosition);
+
+        // Utilise cette distance pour évaluer la courbe speedOverTime
+        float distanceFactor = speedOverTime.Evaluate(distanceTraveled / totalDistance);
+        float speed = speedBase * distanceFactor;
+
+        delta = speed * Time.deltaTime;
+        invader.transform.position += direction * delta;
+
+        // Vérifie si l'invader a atteint le bord de l'écran
+        if (!GameManager.Instance.IsInBounds(invader.transform.position.x, side))
+        {
+            changeDirection = true;
+        }
+    
+    }
+        
+}
     void NewUpdateMovement()
     {
         if (invaders.Count <= 0)
@@ -133,6 +205,7 @@ public class Wave : MonoBehaviour
                     move = move == Move.Right ? Move.Left : Move.Right;
                     BasePosition = Vector2.zero;
                     float bottom = GetRowPosition(invaderPerRow[0].id);
+                    invader.BasePosition = invader.transform.position;
                     if (GameManager.Instance.IsBelowGameOver(bottom))
                     {
                         GameManager.Instance.PlayGameOver();
@@ -146,14 +219,39 @@ public class Wave : MonoBehaviour
             return;
         }
         // Speed depends on remaining invaders ratio
+        
         foreach (var invader in invaders)
         {
             GameManager.DIRECTION side = move == Move.Right ? GameManager.DIRECTION.Right : GameManager.DIRECTION.Left;
             Vector3 direction = directions[(int)move];
+            
             elapsed = GameManager.Instance.HowFarOutOfBounds(invader.transform.position.x, side);
-            speed = speedBase * speedOverTime.Evaluate(elapsed);
+            speed = speedBase;
+            
+            if (direction == Vector3.left)
+            {
+                float columnFactor = Mathf.Lerp(0, speedBase, invader.GridIndex.x / (float)(columns - 1));
+                if (invader.transform.position.x <= (Bounds.min.x + Bounds.max.x) / 2)
+                {
+                    speed = Mathf.Lerp(speedBase, speed,
+                        invader.transform.position.x - (Bounds.min.x + Bounds.max.x) / 2);
+                }
+                speed += columnFactor;
+            }
+            else
+            {
+                float columnFactor = Mathf.Lerp(0f, 1f, invader.GridIndex.x / (float)(columns - 1));
+                if (invader.transform.position.x >= (Bounds.min.x + Bounds.max.x) / 2)
+                {
+                    Mathf.Lerp(1f, 0f,
+                        invader.transform.position.x - (Bounds.min.x + Bounds.max.x) / 2);
+                }
+                speed += columnFactor;
+            }
+            
             delta = speed * Time.deltaTime;
             invader.transform.position += direction * delta;
+            
             // Check if the invader has reached the edge of the screen
             if (!GameManager.Instance.IsInBounds(invader.transform.position.x, move == Move.Right ? GameManager.DIRECTION.Right : GameManager.DIRECTION.Left))
             {

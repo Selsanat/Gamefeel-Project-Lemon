@@ -23,8 +23,8 @@ public class Invader : MonoBehaviour
     [SerializeField] private float GrowMid = 1.5f;
     [SerializeField] private float GrowLow = 2.5f;
     [SerializeField] private float GrowSpeed = 1f;
-    public bool isOnSide = false;
-
+    public Vector3 BasePosition;
+    public Vector3 TargetPosition;
     internal Action<Invader> onDestroy;
     
     enum InvaderState

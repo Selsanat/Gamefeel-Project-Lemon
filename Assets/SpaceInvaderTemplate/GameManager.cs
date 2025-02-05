@@ -73,6 +73,18 @@ public class GameManager : MonoBehaviour
             default: return 0f;
         }
     }
+    
+    public float HowFarMiddleBounds(float position, DIRECTION side)
+    {
+        switch (side)
+        {
+            case DIRECTION.Right: return position - Bounds.center.x;
+            case DIRECTION.Up: return position - Bounds.center.y;
+            case DIRECTION.Left: return Bounds.center.x - position;
+            case DIRECTION.Down: return Bounds.center.y - position;
+            default: return 0f;
+        }
+    }
 
     public bool IsBelowGameOver(float position)
     {        
