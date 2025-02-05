@@ -61,6 +61,7 @@ public class SoundManager : MonoBehaviour
             s.source = gameObject.AddComponent<AudioSource>();
             s.source.clip = s.clip;
             s.source.pitch = s.pitch;
+            s.pitchVariation = s.pitchVariation;
             s.source.volume = s.volume;
             s.source.outputAudioMixerGroup = audioMixerGroup;
             s.source.loop = s.loop;
@@ -183,6 +184,7 @@ public class SoundManager : MonoBehaviour
             Debug.LogWarning("The clip " + name + " doesn't exist !");
             yield return null;
         }
+        s.source.pitch = s.pitch + UnityEngine.Random.Range(0, s.pitchVariation);
         if (s.delay > 0) yield return new WaitForSeconds(s.delay);
         if (s.Oneshot) s.source.PlayOneShot(s.clip);
         else s.source.Play();
@@ -209,11 +211,13 @@ public class SoundManager : MonoBehaviour
             PlayClip(name);
             return;
         }
-
+        s.source.pitch = s.pitch + UnityEngine.Random.Range(0, s.pitchVariation);
         UnityEngine.Random.seed = System.DateTime.Now.Millisecond;
         int random = UnityEngine.Random.Range(0, s.clips.Length - 1);
         s.source.clip = s.clips[random];
-        s.source.PlayDelayed(s.delay);
+        if (s.Oneshot) s.source.PlayOneShot(s.clip);
+        else
+            s.source.PlayDelayed(s.delay);
     }
 
     public void Pauseclip(string name)
@@ -243,6 +247,8 @@ public class Sounds
     public float volume;
     [Range(.1f, 3f)]
     public float pitch;
+    [Range(0, 3f)]
+    public float pitchVariation;
     public bool loop;
     public bool Oneshot;
     public bool playeOnAwake;
