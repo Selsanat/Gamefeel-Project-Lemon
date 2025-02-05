@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Wave : MonoBehaviour
 {
@@ -95,10 +97,12 @@ public class Wave : MonoBehaviour
             invaderSpacing = Mathf.Abs(invaders[1].transform.position.x - invaders[0].transform.position.x);
     }
 
+   
+
     void Update()
     {
         //LastUpdateMovement();
-        NewUpdateMovement();
+        //NewUpdateMovement();
         //UpdateMovement();
         UpdateShoot();
     }
