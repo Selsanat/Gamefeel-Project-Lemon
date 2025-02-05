@@ -1,6 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Numerics;
+using Unity.Mathematics;
 using UnityEngine;
+using Quaternion = UnityEngine.Quaternion;
+using Vector2 = UnityEngine.Vector2;
+using Vector3 = UnityEngine.Vector3;
 
 public class Player : MonoBehaviour
 {
@@ -9,7 +14,7 @@ public class Player : MonoBehaviour
 
     [SerializeField] private Bullet bulletPrefab = null;
     [SerializeField] private Transform shootAt = null;
-    [SerializeField] private float shootCooldown = 1f;
+    [SerializeField] private float shootCooldown = 0.1f;
     [SerializeField] private string collideWithTag = "Untagged";
 
     private float lastShootTimestamp = Mathf.NegativeInfinity;
@@ -41,7 +46,8 @@ public class Player : MonoBehaviour
 
     void Shoot()
     {
-        Instantiate(bulletPrefab, shootAt.position, Quaternion.identity);
+        Vector2 shootAtPosition = shootAt.position + new Vector3(math.sin(Time.time*25)/6, 0, 0);
+        Instantiate(bulletPrefab, shootAtPosition, Quaternion.identity);
         lastShootTimestamp = Time.time;
         EventsManager.Instance.OnShoot.Invoke();
     }
