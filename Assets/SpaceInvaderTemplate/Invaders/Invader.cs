@@ -90,6 +90,7 @@ public class Invader : MonoBehaviour
         if(Pv <= 0)
         {
             cameraShake.Shake();
+            FindObjectOfType<FlashInvader>().Flash();
             Destroy(gameObject);
         }
     }
