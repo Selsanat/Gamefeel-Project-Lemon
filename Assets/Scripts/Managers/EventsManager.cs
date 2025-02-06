@@ -25,12 +25,27 @@ public class EventsManager : MonoBehaviour
         OnGameWin.AddListener(OnGameWinBehaviour);
         OnEnnemyKilled.AddListener(OnEnnemyKilledBehaviour);    
         OnShoot.AddListener(OnShootBehaviour);
+        OnGameStart.Invoke();
     }
 
-    private void OnGameStartBehaviour(){}
-    private void OnGameOverBehaviour() { }
-    private void OnGameWinBehaviour() { }
-    private void OnEnnemyKilledBehaviour() { }
+    private void OnGameStartBehaviour()
+    {
+        SoundManager.instance.PlayClip("BGMGameplay");
+    }
+    private void OnGameOverBehaviour()
+    {
+        SoundManager.instance.Pauseclip("BGMGameplay");
+        SoundManager.instance.PlayClip("BGMDefeat");
+    }
+    private void OnGameWinBehaviour()
+    {
+        SoundManager.instance.Pauseclip("BGMGameplay");
+        SoundManager.instance.PlayClip("BGMVictory");
+    }
+    private void OnEnnemyKilledBehaviour()
+    {
+        SoundManager.instance.PlayClip("ChickDeath");
+    }
 
     private void OnShootBehaviour()
     {
