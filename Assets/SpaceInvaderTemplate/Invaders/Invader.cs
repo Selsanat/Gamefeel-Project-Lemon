@@ -32,6 +32,7 @@ public class Invader : MonoBehaviour
     private CameraShake cameraShake;
     private float BaseScaleX;
     private float BaseScaleY;
+    private bool isAlive = true;
 
     
     enum InvaderState
@@ -67,7 +68,7 @@ public class Invader : MonoBehaviour
 
     public void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.tag != collideWithTag) { return; }
+        if(collision.gameObject.tag != collideWithTag || !isAlive) { return; }
         
         GetHit();
         Destroy(collision.gameObject);
@@ -91,7 +92,8 @@ public class Invader : MonoBehaviour
         {
             cameraShake.Shake();
             FindObjectOfType<FlashInvader>().Flash();
-            Destroy(gameObject);
+            this.GetComponent<SpriteRenderer>().enabled = false;
+            isAlive = false;
         }
     }
 
