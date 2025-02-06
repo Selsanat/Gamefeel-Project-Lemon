@@ -11,6 +11,7 @@ public class Bullet : MonoBehaviour
     [SerializeField] float TimeUntilPop = 1.5f;
     [SerializeField] float RandomPopOffset = 0.5f;
 
+
     private float elapsed = 0f;
     private bool popped = false;
     private float randomOffset = 0f;
@@ -21,15 +22,25 @@ public class Bullet : MonoBehaviour
     }
     void Update()
     {
+
         elapsed += Time.deltaTime;
-        if (!popped && elapsed >= TimeUntilPop+randomOffset)
+        if (startVelocity.y > 0) // if ally or ennemy
         {
-            popped = true;
-            //take random corn sprite
-            Sprite randomSprite = CornSprites[Random.Range(0, CornSprites.Length)];
-            GetComponent<SpriteRenderer>().sprite = randomSprite;
+            if (!popped && elapsed >= TimeUntilPop + randomOffset)
+            {
+                popped = true;
+                SoundManager.instance.PlayClip("PopCornPop");
+                //take random corn sprite
+                Sprite randomSprite = CornSprites[Random.Range(0, CornSprites.Length)];
+                GetComponent<SpriteRenderer>().sprite = randomSprite;
+            }
+
         }
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
         rb.velocity = startVelocity * speedOverTime.Evaluate(elapsed);
+        if (elapsed >= 5)
+        {
+            Destroy(gameObject);
+        }
     }
 }

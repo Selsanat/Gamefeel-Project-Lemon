@@ -49,7 +49,6 @@ public class EventsManager : MonoBehaviour
 
     private void OnShootBehaviour()
     {
-        print("Shooting");
         SoundManager.instance.PlayRandomClip("Gun");
         // make the camera shake using dotween
         CameraManager instance = CameraManager.instance;
