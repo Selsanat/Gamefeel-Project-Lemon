@@ -328,6 +328,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   deadzone: 0.2
   speed: 4
+  windupTime: 0.5
   bulletPrefab: {fileID: 7369880722360228486, guid: 42269f87d33f3eb4898473401db125ae, type: 3}
   shootAt: {fileID: 495127406}
   shootCooldown: 0.05
@@ -747,7 +748,37 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   audioMixerGroup: {fileID: 0}
   audioMixer: {fileID: 0}
-  sounds: []
+  sounds:
+  - name: Gun
+    clips:
+    - {fileID: 8300000, guid: 110925cf62e326049bceac37c62bd700, type: 3}
+    - {fileID: 8300000, guid: a3e4186a27f1f914aa7d7e5b8b4eb839, type: 3}
+    - {fileID: 8300000, guid: 37cfe87abb5b4424aa1de11d6f46a7b9, type: 3}
+    clip: {fileID: 8300000, guid: 110925cf62e326049bceac37c62bd700, type: 3}
+    volume: 0.5
+    pitch: 1
+    pitchVariation: 0
+    loop: 0
+    Oneshot: 1
+    playeOnAwake: 0
+    playOneAfterAnother: 0
+    delay: 0
+    source: {fileID: 0}
+  - name: Windup
+    clips:
+    - {fileID: 8300000, guid: 110925cf62e326049bceac37c62bd700, type: 3}
+    - {fileID: 8300000, guid: a3e4186a27f1f914aa7d7e5b8b4eb839, type: 3}
+    - {fileID: 8300000, guid: 37cfe87abb5b4424aa1de11d6f46a7b9, type: 3}
+    clip: {fileID: 8300000, guid: bd5b59c5da4853148a980ac0b3ad6966, type: 3}
+    volume: 0.5
+    pitch: 1
+    pitchVariation: 0
+    loop: 0
+    Oneshot: 1
+    playeOnAwake: 0
+    playOneAfterAnother: 0
+    delay: 0
+    source: {fileID: 0}
   bgMusics: []
 --- !u!1 &1677758674
 GameObject:

@@ -19,12 +19,24 @@ public class EventsManager : MonoBehaviour
     // Print something when events are called
     private void Start()
     {
-        OnGameStart.AddListener(() => Debug.Log("Game Started"));
-        OnGameOver.AddListener(() => Debug.Log("Game Over"));
-        OnGameWin.AddListener(() => Debug.Log("Game Win"));
-        OnEnnemyKilled.AddListener(() => Debug.Log("Ennemy Killed"));
-        OnShoot.AddListener(() => Debug.Log("Shoot"));
+        OnGameStart.AddListener(OnGameStartBehaviour);
+        OnGameOver.AddListener(OnGameOverBehaviour);
+        OnGameWin.AddListener(OnGameWinBehaviour);
+        OnEnnemyKilled.AddListener(OnEnnemyKilledBehaviour);    
+        OnShoot.AddListener(OnShootBehaviour);
     }
+
+    private void OnGameStartBehaviour(){}
+    private void OnGameOverBehaviour() { }
+    private void OnGameWinBehaviour() { }
+    private void OnEnnemyKilledBehaviour() { }
+
+    private void OnShootBehaviour()
+    {
+        print("Shooting");
+        SoundManager.instance.PlayRandomClip("Gun");
+    }
+
     public static EventsManager Instance
     {
         get

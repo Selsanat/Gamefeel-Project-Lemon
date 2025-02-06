@@ -11,12 +11,14 @@ public class Player : MonoBehaviour
 {
     [SerializeField] private float deadzone = 0.3f;
     [SerializeField] private float speed = 1f;
+    [SerializeField] private float windupTime = 0.5f;
 
     [SerializeField] private Bullet bulletPrefab = null;
     [SerializeField] private Transform shootAt = null;
     [SerializeField] private float shootCooldown = 0.1f;
     [SerializeField] private string collideWithTag = "Untagged";
 
+    private float elapsedWindup = 0f;
     private float lastShootTimestamp = Mathf.NegativeInfinity;
 
     void Update()
@@ -37,10 +39,22 @@ public class Player : MonoBehaviour
 
     void UpdateActions()
     {
-        if (    Input.GetKey(KeyCode.Space) 
-            &&  Time.time > lastShootTimestamp + shootCooldown )
+        if (Input.GetKey(KeyCode.Space))
         {
-            Shoot();
+            if (elapsedWindup == 0)
+            {
+                SoundManager.instance.PlayClip("Windup");
+            }
+            elapsedWindup = math.clamp(elapsedWindup + Time.deltaTime, 0, windupTime);
+            if (elapsedWindup >= windupTime && Time.time > lastShootTimestamp + shootCooldown)
+            {
+                elapsedWindup = windupTime;
+                Shoot();
+            }
+        }
+        else
+        {
+            elapsedWindup = math.clamp(elapsedWindup - Time.deltaTime, 0, windupTime);
         }
     }
 
