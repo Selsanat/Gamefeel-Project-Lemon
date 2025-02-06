@@ -56,8 +56,8 @@ Material:
     - _Alpha: 1
     - _AlphaCutoff: 0.5
     - _ColorMask: 15
-    - _Explosion: 0.4
-    - _HDR: 1
+    - _Explosion: -0.5
+    - _HDR: 2
     - _Noise: 0.08
     - _QueueControl: 0
     - _QueueOffset: 0
@@ -69,6 +69,6 @@ Material:
     - _StencilWriteMask: 255
     - _UseUIAlphaClip: 0
     m_Colors:
-    - _Color: {r: 1, g: 0, b: 0.05709312, a: 1}
+    - _Color: {r: 1, g: 0, b: 0.05882349, a: 1}
     - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []

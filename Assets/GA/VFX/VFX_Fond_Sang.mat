@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: VFX_Goute_Sang
-  m_Shader: {fileID: 4800000, guid: 292dc50f2072fb44ca3e7979e76a2797, type: 3}
+  m_Name: VFX_Fond_Sang
+  m_Shader: {fileID: 4800000, guid: c3169eacd9c0fe746928db51865cb43c, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -23,14 +23,6 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
-    - _TextureSample0:
-        m_Texture: {fileID: 2800000, guid: 2caade5b24b14a84e9a08801c7660351, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _texcoord:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -45,11 +37,9 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Alpha: 1
     - _AlphaCutoff: 0.5
-    - _Float0: 270
-    - _HDR: 1
-    - _Rotation: 270
+    - _HDR: 2
+    - _Tesh_Alpha: 1
     m_Colors:
     - _Couleur: {r: 1, g: 0, b: 0.0627451, a: 1}
     - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
