@@ -35,6 +35,7 @@ public class Invader : MonoBehaviour
     private bool isAlive = true;
     [SerializeField] private GameObject Poussin;
     [SerializeField] private Animator animator;
+    [SerializeField] private GameObject Particule;
 
     
     enum InvaderState
@@ -99,6 +100,7 @@ public class Invader : MonoBehaviour
             FindObjectOfType<FlashInvader>().Flash();
             this.GetComponent<SpriteRenderer>().enabled = false;
             Instantiate(Poussin, new Vector3(transform.position.x,transform.position.y , 0.28f), Quaternion.identity, new RectTransform());
+            Instantiate(Particule, new Vector3(transform.position.x,transform.position.y , 0.28f), Quaternion.identity, new RectTransform());
             isAlive = false;
         }
     }
