@@ -10158,7 +10158,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1.5
+      scalar: 1
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -10211,8 +10211,8 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 5.5
-      minScalar: 5
+      scalar: 4.5
+      minScalar: 4
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -11030,9 +11030,9 @@ ParticleSystem:
       time: 0
       countCurve:
         serializedVersion: 2
-        minMaxState: 0
+        minMaxState: 3
         scalar: 2
-        minScalar: 30
+        minScalar: 3
         maxCurve:
           serializedVersion: 2
           m_Curve:
@@ -19900,7 +19900,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1.5
+      scalar: 1
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -19953,8 +19953,8 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 5.5
-      minScalar: 5
+      scalar: 4.5
+      minScalar: 4
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -20772,9 +20772,9 @@ ParticleSystem:
       time: 0
       countCurve:
         serializedVersion: 2
-        minMaxState: 0
+        minMaxState: 3
         scalar: 2
-        minScalar: 30
+        minScalar: 3
         maxCurve:
           serializedVersion: 2
           m_Curve:
@@ -24743,7 +24743,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1963258275
 Transform:
   m_ObjectHideFlags: 0
@@ -24916,7 +24916,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1.5
+      scalar: 0.5
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -29639,7 +29639,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1997220848
 MonoBehaviour:
   m_ObjectHideFlags: 0
