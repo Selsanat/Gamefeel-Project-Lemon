@@ -100,7 +100,9 @@ public class Invader : MonoBehaviour
             FindObjectOfType<FlashInvader>().Flash();
             this.GetComponent<SpriteRenderer>().enabled = false;
             Instantiate(Poussin, new Vector3(transform.position.x,transform.position.y , 0.28f), Quaternion.identity, new RectTransform());
-            Instantiate(Particule, new Vector3(transform.position.x,transform.position.y , 0.28f), Quaternion.identity, new RectTransform());
+           GameObject p = Instantiate(Particule, new Vector3(transform.position.x,transform.position.y , 0.28f), Quaternion.identity, new RectTransform());
+           p.GetComponent<ParticleSystem>().Emit(1);
+           p.GetComponent<ParticleSystem>().Play();
             isAlive = false;
         }
     }
@@ -118,10 +120,10 @@ public class Invader : MonoBehaviour
         switch (state)
         {
             case InvaderState.MoveLow:
-                animator.SetInteger("Enemy_Phase", 2);
+                animator.SetInteger("Enemy_Phase", 4);
                 break;
             case InvaderState.MoveMid:
-                animator.SetInteger("Enemy_Phase", 1);
+                animator.SetInteger("Enemy_Phase", 2);
                 break;
             case InvaderState.MoveFull:
                 break;
