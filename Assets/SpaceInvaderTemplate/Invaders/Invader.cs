@@ -76,7 +76,6 @@ public class Invader : MonoBehaviour
     private void GetHit()
     {
         AnimHit();
-        cameraShake.Shake();
         Pv -= Dommage;
         if (Pv <= PvStateMid && Pv > PvStateLow)
         {
@@ -90,6 +89,7 @@ public class Invader : MonoBehaviour
         }
         if(Pv <= 0)
         {
+            cameraShake.Shake();
             Destroy(gameObject);
         }
     }

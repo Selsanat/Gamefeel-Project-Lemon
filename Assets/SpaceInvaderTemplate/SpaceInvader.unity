@@ -894,9 +894,9 @@ MonoBehaviour:
   shootRandomMax: {x: 0.5, y: 1.5}
   timeBeforeFirstShoot: 5
   downStep: 0.3
-  TimeToCross: 1
-  EndPositionRight: 5
-  EndPositionLeft: 5
+  TimeToCross: 5
+  EndPositionRight: 7.5
+  EndPositionLeft: -7.5
 --- !u!4 &1833304615
 Transform:
   m_ObjectHideFlags: 0

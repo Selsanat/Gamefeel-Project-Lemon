@@ -72,7 +72,6 @@ public class Wave : MonoBehaviour
         for (int i = 0; i < columns; i++)
         {
             invaderPerColumn.Add(new() { invaders= new() });
-            Debug.Log("invaderPerColumn: " + invaderPerColumn[i].invaders);
         }
         for (int i = 0; i < rows; i++)
         {
@@ -124,24 +123,25 @@ public class Wave : MonoBehaviour
         shootCooldown += Random.Range(shootRandom.x, shootRandom.y);
     }
 
-        
+
     void UpdateMovement()
     {
         if (invaders.Count <= 0)
         {
             return;
         }
-        
+
         float time = 1f - (invaders.Count - 1) / (float)((rows * columns) - 1);
         float speed = Mathf.Lerp(speedMin, speedMax, difficultyProgress.Evaluate(time));
 
         Vector3 downDirection = Vector3.down;
         if (changeDirection)
         {
-            if(BasePosition == Vector2.zero)
+            if (BasePosition == Vector2.zero)
             {
                 BasePosition = invaders[0].transform.position + downDirection;
             }
+
             foreach (var invader in invaders)
             {
                 if (invaders[0].transform.position.y < BasePosition.y)
@@ -155,68 +155,88 @@ public class Wave : MonoBehaviour
                     {
                         GameManager.Instance.PlayGameOver();
                     }
+
                     isFirstSequence = true;
 
                     break;
 
                 }
+
                 invader.transform.position += downDirection * speed * Time.deltaTime;
-                
+
             }
+
             return;
         }
+
         // Speed depends on remaining invaders ratio
         if (!isFirstSequence)
             return;
         isFirstSequence = false;
         if (invaders.Count <= 0) return;
+        //distBtwInvaders = 0.2f;
 
-        float movementDistance = direction.x * distBtwInvaders * columns;
-
-        Sequence globalSequence = DOTween.Sequence();
-
-        for (int col = 0; col < columns; col++)
+        if (direction == Vector3.left)
         {
-            List<Invader> column = invaderPerColumn[col].invaders;
-            float columnDelay = col * 0.1f; // Délai progressif entre les colonnes
-
-            foreach (var invader in column)
+            Sequence globalSequence = DOTween.Sequence();
+            int iLeft = 0;
+            for (int col = 0; col < columns; col++)
             {
-                float finalXPosition = invader.transform.position.x + movementDistance;
-                
-                if(direction == Vector3.right)
-                    finalXPosition = EndPositionRight -  movementDistance;
-                else
-                {
-                    Debug.Log("left");
-                    finalXPosition = EndPositionLeft + movementDistance;
-                }
-                // Déplacer chaque invader en respectant l'espacement initial
-                globalSequence.Insert(columnDelay, 
-                    invader.transform.DOMoveX(finalXPosition, TimeToCross)
-                        .SetEase(Ease.OutCirc)
-                );
+                MovementLateral(iLeft, col, globalSequence);
+                iLeft++;
             }
         }
-
-        globalSequence.OnComplete(() =>
+        else
         {
-            if(direction == Vector3.right)
+            Sequence globalSequence = DOTween.Sequence();
+            int iRight = 0;
+            for (int col = columns - 1; col >= 0; col--)
             {
-                direction = Vector3.left;
+                MovementLateral(iRight, col, globalSequence);
+                iRight++;
             }
-            else
-            {
-                direction = Vector3.right;
-            }
-            changeDirection = true;
-            
-            Debug.Log("finisg");
-        });
-        
-            
+        }
     }
 
+
+
+    void MovementLateral(int i, int col, Sequence globalSequence)
+    {
+        List<Invader> column = invaderPerColumn[i].invaders;
+        float columnDelay = col * 0.1f; 
+        foreach (var invader in column)
+        {
+                
+            float finalXPosition;
+                
+            if(direction == Vector3.right)
+                finalXPosition = EndPositionRight - (col);
+            else
+            {
+                finalXPosition = EndPositionLeft +  (col);
+            }
+            // Déplacer chaque invader en respectant l'espacement initial
+            globalSequence.Insert(columnDelay, 
+                invader.transform.DOMoveX(finalXPosition, TimeToCross)
+                    .SetEase(Ease.OutCirc)
+            );
+        }
+
+    globalSequence.OnComplete(() =>
+    {
+        Debug.Log(direction);
+        if(direction == Vector3.right)
+        {
+            direction = Vector3.left;
+        }
+        else
+        {
+            direction = Vector3.right;
+        }
+        changeDirection = true;
+            
+    });
+    }
     
 
     /// <summary>
