@@ -137,6 +137,7 @@ public class Invader : MonoBehaviour
 
     public void Shoot()
     {
-        Instantiate(bulletPrefab, shootAt.position, Quaternion.identity);
+        
+        Instantiate(bulletPrefab, shootAt.position, Quaternion.Euler(0, 0, 180));
     }
 }
