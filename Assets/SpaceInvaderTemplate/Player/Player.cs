@@ -79,6 +79,7 @@ public class Player : MonoBehaviour
     {
         if (collision.gameObject.tag != collideWithTag) { return; }
 
+        //animation explosion
         GameManager.Instance.PlayGameOver();
         EventsManager.Instance.OnGameOver.Invoke();
     }

@@ -18,6 +18,10 @@ public class EventsManager : MonoBehaviour
     public UnityEvent OnMove;
     public UnityEvent OnStop;
 
+    public GameObject Player;
+    public Wave Wave;
+    public BackGroundScroll BackGroundScroll;
+
 
     // Print something when events are called
     private void Start()
@@ -41,7 +45,8 @@ public class EventsManager : MonoBehaviour
     {
         SoundManager.instance.Pauseclip("BGMGameplay");
         SoundManager.instance.Pauseclip("Engine");
-        SoundManager.instance.PlayClip("BGMDefeat");
+        SoundManager.instance.PlayClip("PlayerDeath");
+        StartCoroutine(Death());
     }
     private void OnGameWinBehaviour()
     {
@@ -103,5 +108,26 @@ public class EventsManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    private IEnumerator Death()
+    {
+        if (Player != null)
+        {
+            Player.GetComponent<Player>().enabled = false;
+        }
+        if (BackGroundScroll != null)
+        {
+            BackGroundScroll.ScrollSpeed = 0.5f;
+        }
+        if (Wave != null)
+        {
+            Wave.enabled = false;
+        }
+        CameraManager instance = CameraManager.instance;
+        Camera.main.transform.DOShakePosition(instance.PlayerDeathShakeDuration, instance.PlayerDeathShakePower, 10);
+        yield return new WaitForSeconds(2f);
+        Time.timeScale = 0;
+        SoundManager.instance.PlayClip("BGMDefeat");
     }
 }

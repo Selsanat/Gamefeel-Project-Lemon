@@ -11,7 +11,7 @@ public class BackGroundScroll : MonoBehaviour
 
     void Start()
     {
-        ScrollSpeed = 0.5f;
+        //ScrollSpeed = 0.5f;
     }
     void Update()
     {

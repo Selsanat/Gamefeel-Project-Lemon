@@ -11,6 +11,10 @@ public class CameraManager : MonoBehaviour
     public float ShootShakePower = 0.1f;
     public float ShootShakeDuration = 0.1f;
 
+    [Header("Player Death Shake Parameters")]
+    public float PlayerDeathShakePower = 0.5f;
+    public float PlayerDeathShakeDuration = 0.6f;
+
 
     private void Awake()
     {

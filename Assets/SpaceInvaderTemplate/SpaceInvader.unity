@@ -438,6 +438,9 @@ MonoBehaviour:
   OnStop:
     m_PersistentCalls:
       m_Calls: []
+  Player: {fileID: 0}
+  Wave: {fileID: 1833304614}
+  BackGroundScroll: {fileID: 867322337}
 --- !u!1 &495127405
 GameObject:
   m_ObjectHideFlags: 0
@@ -764,6 +767,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShootShakePower: 0.1
   ShootShakeDuration: 0.1
+  PlayerDeathShakePower: 1
+  PlayerDeathShakeDuration: 1.5
 --- !u!1 &844115095
 GameObject:
   m_ObjectHideFlags: 0
@@ -895,7 +900,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e87dedcf7dc2b04189b3a85df516547, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ScrollSpeed: 1
+  ScrollSpeed: 3
   BackGrounds:
   - {fileID: 1361565162}
   - {fileID: 844115095}
@@ -1268,7 +1273,7 @@ MonoBehaviour:
     playOneAfterAnother: 0
     delay: 0
     source: {fileID: 0}
-  - name: Player Death
+  - name: PlayerDeath
     clips:
     - {fileID: 8300000, guid: 110925cf62e326049bceac37c62bd700, type: 3}
     - {fileID: 8300000, guid: a3e4186a27f1f914aa7d7e5b8b4eb839, type: 3}
