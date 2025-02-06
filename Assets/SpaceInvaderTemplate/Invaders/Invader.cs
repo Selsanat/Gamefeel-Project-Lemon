@@ -110,6 +110,7 @@ public class Invader : MonoBehaviour
         p.GetComponent<ParticleSystem>().Play();
         isAlive = false;
         GetComponentInParent<Wave>().addInvaderDeath();
+        EventsManager.Instance.OnEnnemyKilled.Invoke();
     }
 
     private void AnimHit()

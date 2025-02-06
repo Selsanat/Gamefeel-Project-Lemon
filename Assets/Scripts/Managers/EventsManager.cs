@@ -65,6 +65,8 @@ public class EventsManager : MonoBehaviour
         UIdefeat.DOFade(0, 0.0001f);
         UIbg.DOFade(1, 0.5f);
         UIvictory.DOFade(1, 0.5f);
+        Player.enabled = false;
+        Wave.enabled = false;
     }
     private void OnEnnemyKilledBehaviour()
     {

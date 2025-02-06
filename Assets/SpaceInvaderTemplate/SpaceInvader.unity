@@ -1856,8 +1856,8 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 37cfe87abb5b4424aa1de11d6f46a7b9, type: 3}
     clip: {fileID: 8300000, guid: db44c26fe091a5e4aad44fad5c915825, type: 3}
     volume: 0.5
-    pitch: 1
-    pitchVariation: 0.5
+    pitch: 0.8
+    pitchVariation: 0.2
     loop: 0
     Oneshot: 1
     playeOnAwake: 0
@@ -1904,7 +1904,7 @@ MonoBehaviour:
     pitch: 1
     pitchVariation: 0
     loop: 1
-    Oneshot: 1
+    Oneshot: 0
     playeOnAwake: 0
     playOneAfterAnother: 0
     delay: 0
