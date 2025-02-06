@@ -15,8 +15,8 @@ public class Invader : MonoBehaviour
     
     [SerializeField] private int Pv;
     [SerializeField] private int PvMax = 100;
-    [SerializeField] private int PvPourcentLow = 30;   
-    [SerializeField] private int PvPourcentMid = 50;
+    [SerializeField] private int PvPourcentLow = 40;   
+    [SerializeField] private int PvPourcentMid = 60;
     
     private int PvStateMid;
     private int PvStateLow;
