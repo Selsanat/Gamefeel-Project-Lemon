@@ -18,7 +18,7 @@ public class EventsManager : MonoBehaviour
     public UnityEvent OnMove;
     public UnityEvent OnStop;
 
-    public GameObject Player;
+    public Player Player;
     public Wave Wave;
     public BackGroundScroll BackGroundScroll;
 
@@ -114,7 +114,7 @@ public class EventsManager : MonoBehaviour
     {
         if (Player != null)
         {
-            Player.GetComponent<Player>().enabled = false;
+            Player.enabled = false;
         }
         if (BackGroundScroll != null)
         {

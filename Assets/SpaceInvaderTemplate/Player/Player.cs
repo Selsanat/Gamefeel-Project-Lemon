@@ -6,6 +6,7 @@ using UnityEngine;
 using Quaternion = UnityEngine.Quaternion;
 using Vector2 = UnityEngine.Vector2;
 using Vector3 = UnityEngine.Vector3;
+using DG.Tweening;
 
 public class Player : MonoBehaviour
 {
@@ -21,9 +22,17 @@ public class Player : MonoBehaviour
     [SerializeField] GameObject explosionPrefab;
     [SerializeField] Vector3 explosionOffset;
 
+    private float BaseScaleX;
+    private float BaseScaleY;
 
     private float elapsedWindup = 0f;
     private float lastShootTimestamp = Mathf.NegativeInfinity;
+
+    void Start()
+    {
+        BaseScaleX = this.gameObject.transform.localScale.x;
+        BaseScaleY = this.gameObject.transform.localScale.y;
+    }
 
     void Update()
     {
@@ -72,7 +81,16 @@ public class Player : MonoBehaviour
         Instantiate(explosionPrefab, gameObject.transform.position + explosionOffset, Quaternion.identity);
         lastShootTimestamp = Time.time;
         EventsManager.Instance.OnShoot.Invoke();
+        AnimShoot();
 
+    }
+
+    private void AnimShoot()
+    {
+        transform.DOScaleX(this.transform.localScale.x * 2, 0);
+        transform.DOScaleX(BaseScaleX, shootCooldown);
+        transform.DOScaleY(this.transform.localScale.y / 2, 0);
+        transform.DOScaleY(BaseScaleY, shootCooldown);
     }
 
     public void OnTriggerEnter2D(Collider2D collision)
