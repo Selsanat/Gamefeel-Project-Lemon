@@ -139,6 +139,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 158cf151c7190f448963d37dc7095568, type: 3}
   TimeUntilPop: 0.2
   RandomPopOffset: 0
+  CanMakePopSound: 1
 --- !u!58 &7187537139655989992
 CircleCollider2D:
   m_ObjectHideFlags: 0

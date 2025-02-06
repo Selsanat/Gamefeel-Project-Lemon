@@ -18,6 +18,7 @@ public class EventsManager : MonoBehaviour
     public UnityEvent OnMove;
     public UnityEvent OnStop;
     public UnityEvent OnEnnemyHit;
+    public UnityEvent OnBulletPop;
 
     public Player Player;
     public Wave Wave;
@@ -35,6 +36,7 @@ public class EventsManager : MonoBehaviour
         OnMove.AddListener(OnMoveBehavior);
         OnStop.AddListener(OnStopBehavior);
         OnEnnemyHit.AddListener(OnEnnemyHitBehavior);
+        OnBulletPop.AddListener(OnBulletPopBehavior);
         OnGameStart.Invoke();
     }
 
@@ -84,6 +86,11 @@ public class EventsManager : MonoBehaviour
     private void OnEnnemyHitBehavior()
     {
         SoundManager.instance.PlayClip("ChickPiou");
+    }
+
+    private void OnBulletPopBehavior()
+    {
+        SoundManager.instance.PlayClip("PopcornPop");
     }
 
     public static EventsManager Instance

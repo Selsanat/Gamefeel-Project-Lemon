@@ -438,6 +438,12 @@ MonoBehaviour:
   OnStop:
     m_PersistentCalls:
       m_Calls: []
+  OnEnnemyHit:
+    m_PersistentCalls:
+      m_Calls: []
+  OnBulletPop:
+    m_PersistentCalls:
+      m_Calls: []
   Player: {fileID: 582271454}
   Wave: {fileID: 1833304614}
   BackGroundScroll: {fileID: 867322337}
@@ -512,6 +518,8 @@ MonoBehaviour:
   collideWithTag: Untagged
   explosionPrefab: {fileID: 5866151270141338003, guid: ead3c6785b121304dbcafd6493c84f70, type: 3}
   explosionOffset: {x: 0, y: 0, z: 0}
+  ScaleMutiplicatorHitX: 1.5
+  ScaleMutiplicatorHitY: 1.5
 --- !u!212 &582271455
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1219,7 +1227,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: a3e4186a27f1f914aa7d7e5b8b4eb839, type: 3}
     - {fileID: 8300000, guid: 37cfe87abb5b4424aa1de11d6f46a7b9, type: 3}
     clip: {fileID: 8300000, guid: 110925cf62e326049bceac37c62bd700, type: 3}
-    volume: 0.05
+    volume: 0.08
     pitch: 1
     pitchVariation: 0
     loop: 0
@@ -1303,13 +1311,13 @@ MonoBehaviour:
     playOneAfterAnother: 0
     delay: 0
     source: {fileID: 0}
-  - name: PopCornPop
+  - name: PopcornPop
     clips:
     - {fileID: 8300000, guid: 110925cf62e326049bceac37c62bd700, type: 3}
     - {fileID: 8300000, guid: a3e4186a27f1f914aa7d7e5b8b4eb839, type: 3}
     - {fileID: 8300000, guid: 37cfe87abb5b4424aa1de11d6f46a7b9, type: 3}
     clip: {fileID: 8300000, guid: aeff54e72f20c674990984be375a9090, type: 3}
-    volume: 0.5
+    volume: 0.3
     pitch: 1
     pitchVariation: 1
     loop: 0

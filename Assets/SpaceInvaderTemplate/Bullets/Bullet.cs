@@ -10,6 +10,7 @@ public class Bullet : MonoBehaviour
     [SerializeField] Sprite[] CornSprites;
     [SerializeField] float TimeUntilPop = 1.5f;
     [SerializeField] float RandomPopOffset = 0.5f;
+    [SerializeField] bool CanMakePopSound = false;
 
     private float elapsed = 0f;
     private bool popped = false;
@@ -25,6 +26,10 @@ public class Bullet : MonoBehaviour
         if (!popped && elapsed >= TimeUntilPop+randomOffset)
         {
             popped = true;
+            if (CanMakePopSound)
+            {
+                EventsManager.Instance.OnBulletPop.Invoke();
+            }
             //take random corn sprite
             Sprite randomSprite = CornSprites[Random.Range(0, CornSprites.Length)];
             GetComponent<SpriteRenderer>().sprite = randomSprite;
