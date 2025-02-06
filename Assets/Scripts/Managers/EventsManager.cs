@@ -28,6 +28,7 @@ public class EventsManager : MonoBehaviour
     public Image UIbg;
     public Image UIdefeat;
     public Image UIvictory;
+    public Image UIfirePanel;
 
 
     // Print something when events are called
@@ -86,6 +87,8 @@ public class EventsManager : MonoBehaviour
     private void OnShootBehaviour()
     {
         print("Shooting");
+        UIfirePanel.DOFade(0.03f, 0);
+        UIfirePanel.DOFade(0, 0.1f);
         SoundManager.instance.PlayRandomClip("Gun");
         // make the camera shake using dotween
         CameraManager instance = CameraManager.instance;
