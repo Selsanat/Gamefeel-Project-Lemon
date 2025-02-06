@@ -18,6 +18,10 @@ public class Player : MonoBehaviour
     [SerializeField] private float shootCooldown = 0.1f;
     [SerializeField] private string collideWithTag = "Untagged";
 
+    [SerializeField] GameObject explosionPrefab;
+    [SerializeField] Vector3 explosionOffset;
+
+
     private float elapsedWindup = 0f;
     private float lastShootTimestamp = Mathf.NegativeInfinity;
 
@@ -62,8 +66,10 @@ public class Player : MonoBehaviour
     {
         Vector2 shootAtPosition = shootAt.position + new Vector3(math.sin(Time.time*25)/6, 0, 0);
         Instantiate(bulletPrefab, shootAtPosition, Quaternion.identity);
+        Instantiate(explosionPrefab, gameObject.transform.position + explosionOffset, Quaternion.identity);
         lastShootTimestamp = Time.time;
         EventsManager.Instance.OnShoot.Invoke();
+
     }
 
     public void OnTriggerEnter2D(Collider2D collision)
