@@ -76,7 +76,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 16a86a7f581fc4dfb953e0df8ad3ecac, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 3feaa1b2230c1e043942ce157a9ae37f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -134,9 +134,9 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   CornSprites:
-  - {fileID: 21300000, guid: 4d8f75767ad1f824eb12404bd67bbe2c, type: 3}
-  - {fileID: 21300000, guid: ba1822aeb560bfe49a464d4e0d8c8da8, type: 3}
-  - {fileID: 21300000, guid: 3dd781ff1e14ad541be6a53e7d30c4f6, type: 3}
+  - {fileID: 21300000, guid: c3dce759eabcbea44b31bb9ef58442ca, type: 3}
+  - {fileID: 21300000, guid: c76266636b1f67c4e9fde3ac7bb8772d, type: 3}
+  - {fileID: 21300000, guid: 158cf151c7190f448963d37dc7095568, type: 3}
   TimeUntilPop: 0.2
   RandomPopOffset: 0
 --- !u!58 &7187537139655989992
