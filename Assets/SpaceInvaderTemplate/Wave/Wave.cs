@@ -45,6 +45,7 @@ public class Wave : MonoBehaviour
     float lenghtInvader = 0;
     private bool isFirstSequence = true;
     private float invaderSpacing;
+    private int InvaderDeathCount = 0;
 
 
 
@@ -105,6 +106,7 @@ public class Wave : MonoBehaviour
     {
         UpdateMovement();
         UpdateShoot();
+        
     }
 
     private void UpdateShoot()
@@ -144,6 +146,11 @@ public class Wave : MonoBehaviour
 
             foreach (var invader in invaders)
             {
+                if(invader.transform.position.y <= -3.9f)
+                {
+                    EventsManager.Instance.OnGameOver.Invoke();
+
+                }
                 if (invaders[0].transform.position.y < BasePosition.y)
                 {
                     changeDirection = false;
@@ -300,5 +307,15 @@ public class Wave : MonoBehaviour
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireCube(transform.position, new Vector3(bounds.x, bounds.y, 0f));
+    }
+
+    public void addInvaderDeath()
+    {
+        InvaderDeathCount++;
+        if(InvaderDeathCount == rows * columns)
+        {
+            EventsManager.Instance.OnGameWin.Invoke();
+            
+        }
     }
 }

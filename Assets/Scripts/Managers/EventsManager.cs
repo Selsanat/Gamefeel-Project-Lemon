@@ -62,7 +62,7 @@ public class EventsManager : MonoBehaviour
         SoundManager.instance.Pauseclip("BGMGameplay");
         SoundManager.instance.PlayClip("BGMVictory");
         SoundManager.instance.Pauseclip("Engine");
-
+        UIdefeat.DOFade(0, 0.0001f);
         UIbg.DOFade(1, 0.5f);
         UIvictory.DOFade(1, 0.5f);
     }
