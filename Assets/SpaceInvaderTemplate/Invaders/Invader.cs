@@ -34,6 +34,7 @@ public class Invader : MonoBehaviour
     private float BaseScaleY;
     private bool isAlive = true;
     [SerializeField] private GameObject Poussin;
+    [SerializeField] private Animator animator;
 
     
     enum InvaderState
@@ -78,6 +79,7 @@ public class Invader : MonoBehaviour
     private void GetHit()
     {
         AnimHit();
+        animator.SetTrigger("Enemy_Hitted");
         Pv -= Dommage;
         if (Pv <= PvStateMid && Pv > PvStateLow)
         {
@@ -91,6 +93,7 @@ public class Invader : MonoBehaviour
         }
         if(Pv <= 0)
         {
+            
             Debug.Log("dead");
             cameraShake.Shake();
             FindObjectOfType<FlashInvader>().Flash();
@@ -113,10 +116,10 @@ public class Invader : MonoBehaviour
         switch (state)
         {
             case InvaderState.MoveLow:
-                //this.gameObject.transform.localScale = new Vector3(GrowLow, GrowLow, GrowLow);
+                animator.SetInteger("Enemy_Phase", 2);
                 break;
             case InvaderState.MoveMid:
-                //this.gameObject.transform.localScale = new Vector3(GrowMid, GrowMid, GrowMid);
+                animator.SetInteger("Enemy_Phase", 1);
                 break;
             case InvaderState.MoveFull:
                 break;
