@@ -8,9 +8,8 @@ Shader "VFX_Explosion_Sang"
 		[HideInInspector] _EmissionColor("Emission Color", Color) = (1,1,1,1)
 		_TextureSample0("Texture Sample 0", 2D) = "white" {}
 		_Color("Color", Color) = (0,1,0.02366424,0)
-		_Alpha("Alpha", Float) = 1
 		_HDR("HDR", Float) = 1
-		_Explosion("Explosion", Range( -0.5 , 0.4)) = -0.05603248
+		_Alpha("Alpha", Float) = 1
 		_Noise("Noise", Range( 0 , 0.5)) = 0.247094
 
 		[HideInInspector][NoScaleOffset] unity_Lightmaps("unity_Lightmaps", 2DArray) = "" {}
@@ -95,14 +94,14 @@ Shader "VFX_Explosion_Sang"
 			#include "Packages/com.unity.render-pipelines.universal/Shaders/2D/Include/SurfaceData2D.hlsl"
 			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Debug/Debugging2D.hlsl"
 
-			
+			#define ASE_NEEDS_FRAG_COLOR
+
 
 			sampler2D _TextureSample0;
 			CBUFFER_START( UnityPerMaterial )
 			float4 _Color;
 			float _HDR;
 			float _Alpha;
-			float _Explosion;
 			float _Noise;
 			CBUFFER_END
 
@@ -208,10 +207,10 @@ Shader "VFX_Explosion_Sang"
 				float simplePerlin2D74 = snoise( texCoord38*5.0 );
 				simplePerlin2D74 = simplePerlin2D74*0.5 + 0.5;
 				float temp_output_43_0 = ( 1.0 - length( ( ( simplePerlin2D74 * _Noise ) + (texCoord38*1.0 + -( _Noise + (0.5 + (_Noise - 0.0) * (0.25 - 0.5) / (0.5 - 0.0)) )) ) ) );
-				float smoothstepResult42 = smoothstep( ( 0.5 + -_Explosion ) , ( 0.51 + -_Explosion ) , temp_output_43_0);
-				float smoothstepResult49 = smoothstep( ( 0.6 + -_Explosion ) , ( 0.61 + -_Explosion ) , temp_output_43_0);
+				float smoothstepResult42 = smoothstep( ( 0.5 + -(-0.5 + (IN.color.b - 0.0) * (0.4 - -0.5) / (1.0 - 0.0)) ) , ( 0.51 + -(-0.5 + (IN.color.b - 0.0) * (0.4 - -0.5) / (1.0 - 0.0)) ) , temp_output_43_0);
+				float smoothstepResult49 = smoothstep( ( 0.6 + -(-0.5 + (IN.color.b - 0.0) * (0.4 - -0.5) / (1.0 - 0.0)) ) , ( 0.61 + -(-0.5 + (IN.color.b - 0.0) * (0.4 - -0.5) / (1.0 - 0.0)) ) , temp_output_43_0);
 				
-				float4 Color = ( ( ( _Color * _HDR ) * saturate( ( smoothstepResult18 * _Alpha ) ) ) * ( smoothstepResult42 - smoothstepResult49 ) );
+				float4 Color = ( ( ( _Color * _HDR ) * saturate( ( smoothstepResult18 * _Alpha ) ) ) * ( ( smoothstepResult42 - smoothstepResult49 ) + 0.0 ) );
 
 				#if ETC1_EXTERNAL_ALPHA
 					float4 alpha = SAMPLE_TEXTURE2D(_AlphaTex, sampler_AlphaTex, IN.texCoord0.xy);
@@ -298,14 +297,14 @@ Shader "VFX_Explosion_Sang"
 			#include "Packages/com.unity.render-pipelines.universal/Shaders/2D/Include/SurfaceData2D.hlsl"
 			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Debug/Debugging2D.hlsl"
 
-			
+			#define ASE_NEEDS_FRAG_COLOR
+
 
 			sampler2D _TextureSample0;
 			CBUFFER_START( UnityPerMaterial )
 			float4 _Color;
 			float _HDR;
 			float _Alpha;
-			float _Explosion;
 			float _Noise;
 			CBUFFER_END
 
@@ -411,10 +410,10 @@ Shader "VFX_Explosion_Sang"
 				float simplePerlin2D74 = snoise( texCoord38*5.0 );
 				simplePerlin2D74 = simplePerlin2D74*0.5 + 0.5;
 				float temp_output_43_0 = ( 1.0 - length( ( ( simplePerlin2D74 * _Noise ) + (texCoord38*1.0 + -( _Noise + (0.5 + (_Noise - 0.0) * (0.25 - 0.5) / (0.5 - 0.0)) )) ) ) );
-				float smoothstepResult42 = smoothstep( ( 0.5 + -_Explosion ) , ( 0.51 + -_Explosion ) , temp_output_43_0);
-				float smoothstepResult49 = smoothstep( ( 0.6 + -_Explosion ) , ( 0.61 + -_Explosion ) , temp_output_43_0);
+				float smoothstepResult42 = smoothstep( ( 0.5 + -(-0.5 + (IN.color.b - 0.0) * (0.4 - -0.5) / (1.0 - 0.0)) ) , ( 0.51 + -(-0.5 + (IN.color.b - 0.0) * (0.4 - -0.5) / (1.0 - 0.0)) ) , temp_output_43_0);
+				float smoothstepResult49 = smoothstep( ( 0.6 + -(-0.5 + (IN.color.b - 0.0) * (0.4 - -0.5) / (1.0 - 0.0)) ) , ( 0.61 + -(-0.5 + (IN.color.b - 0.0) * (0.4 - -0.5) / (1.0 - 0.0)) ) , temp_output_43_0);
 				
-				float4 Color = ( ( ( _Color * _HDR ) * saturate( ( smoothstepResult18 * _Alpha ) ) ) * ( smoothstepResult42 - smoothstepResult49 ) );
+				float4 Color = ( ( ( _Color * _HDR ) * saturate( ( smoothstepResult18 * _Alpha ) ) ) * ( ( smoothstepResult42 - smoothstepResult49 ) + 0.0 ) );
 
 				#if ETC1_EXTERNAL_ALPHA
 					float4 alpha = SAMPLE_TEXTURE2D( _AlphaTex, sampler_AlphaTex, IN.texCoord0.xy );
@@ -490,14 +489,14 @@ Shader "VFX_Explosion_Sang"
 			#include_with_pragmas "Packages/com.unity.render-pipelines.universal/ShaderLibrary/DOTS.hlsl"
 			#include "Packages/com.unity.render-pipelines.universal/Editor/ShaderGraph/Includes/ShaderPass.hlsl"
 
-			
+			#define ASE_NEEDS_FRAG_COLOR
+
 
 			sampler2D _TextureSample0;
 			CBUFFER_START( UnityPerMaterial )
 			float4 _Color;
 			float _HDR;
 			float _Alpha;
-			float _Explosion;
 			float _Noise;
 			CBUFFER_END
 
@@ -508,6 +507,7 @@ Shader "VFX_Explosion_Sang"
 				float3 normal : NORMAL;
 				float4 tangent : TANGENT;
 				float4 ase_texcoord : TEXCOORD0;
+				float4 ase_color : COLOR;
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 			};
 
@@ -515,6 +515,7 @@ Shader "VFX_Explosion_Sang"
 			{
 				float4 positionCS : SV_POSITION;
 				float4 ase_texcoord : TEXCOORD0;
+				float4 ase_color : COLOR;
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 			};
 
@@ -559,6 +560,7 @@ Shader "VFX_Explosion_Sang"
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
 
 				o.ase_texcoord.xy = v.ase_texcoord.xy;
+				o.ase_color = v.ase_color;
 				
 				//setting value to unused interpolator channels and avoid initialization warnings
 				o.ase_texcoord.zw = 0;
@@ -589,10 +591,10 @@ Shader "VFX_Explosion_Sang"
 				float simplePerlin2D74 = snoise( texCoord38*5.0 );
 				simplePerlin2D74 = simplePerlin2D74*0.5 + 0.5;
 				float temp_output_43_0 = ( 1.0 - length( ( ( simplePerlin2D74 * _Noise ) + (texCoord38*1.0 + -( _Noise + (0.5 + (_Noise - 0.0) * (0.25 - 0.5) / (0.5 - 0.0)) )) ) ) );
-				float smoothstepResult42 = smoothstep( ( 0.5 + -_Explosion ) , ( 0.51 + -_Explosion ) , temp_output_43_0);
-				float smoothstepResult49 = smoothstep( ( 0.6 + -_Explosion ) , ( 0.61 + -_Explosion ) , temp_output_43_0);
+				float smoothstepResult42 = smoothstep( ( 0.5 + -(-0.5 + (IN.ase_color.b - 0.0) * (0.4 - -0.5) / (1.0 - 0.0)) ) , ( 0.51 + -(-0.5 + (IN.ase_color.b - 0.0) * (0.4 - -0.5) / (1.0 - 0.0)) ) , temp_output_43_0);
+				float smoothstepResult49 = smoothstep( ( 0.6 + -(-0.5 + (IN.ase_color.b - 0.0) * (0.4 - -0.5) / (1.0 - 0.0)) ) , ( 0.61 + -(-0.5 + (IN.ase_color.b - 0.0) * (0.4 - -0.5) / (1.0 - 0.0)) ) , temp_output_43_0);
 				
-				float4 Color = ( ( ( _Color * _HDR ) * saturate( ( smoothstepResult18 * _Alpha ) ) ) * ( smoothstepResult42 - smoothstepResult49 ) );
+				float4 Color = ( ( ( _Color * _HDR ) * saturate( ( smoothstepResult18 * _Alpha ) ) ) * ( ( smoothstepResult42 - smoothstepResult49 ) + 0.0 ) );
 
 				half4 outColor = half4(_ObjectId, _PassValue, 1.0, 1.0);
 				return outColor;
@@ -648,14 +650,14 @@ Shader "VFX_Explosion_Sang"
 			#include_with_pragmas "Packages/com.unity.render-pipelines.universal/ShaderLibrary/DOTS.hlsl"
 			#include "Packages/com.unity.render-pipelines.universal/Editor/ShaderGraph/Includes/ShaderPass.hlsl"
 
-        	
+        	#define ASE_NEEDS_FRAG_COLOR
+
 
 			sampler2D _TextureSample0;
 			CBUFFER_START( UnityPerMaterial )
 			float4 _Color;
 			float _HDR;
 			float _Alpha;
-			float _Explosion;
 			float _Noise;
 			CBUFFER_END
 
@@ -666,6 +668,7 @@ Shader "VFX_Explosion_Sang"
 				float3 normal : NORMAL;
 				float4 tangent : TANGENT;
 				float4 ase_texcoord : TEXCOORD0;
+				float4 ase_color : COLOR;
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 			};
 
@@ -673,6 +676,7 @@ Shader "VFX_Explosion_Sang"
 			{
 				float4 positionCS : SV_POSITION;
 				float4 ase_texcoord : TEXCOORD0;
+				float4 ase_color : COLOR;
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 			};
 
@@ -716,6 +720,7 @@ Shader "VFX_Explosion_Sang"
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
 
 				o.ase_texcoord.xy = v.ase_texcoord.xy;
+				o.ase_color = v.ase_color;
 				
 				//setting value to unused interpolator channels and avoid initialization warnings
 				o.ase_texcoord.zw = 0;
@@ -746,10 +751,10 @@ Shader "VFX_Explosion_Sang"
 				float simplePerlin2D74 = snoise( texCoord38*5.0 );
 				simplePerlin2D74 = simplePerlin2D74*0.5 + 0.5;
 				float temp_output_43_0 = ( 1.0 - length( ( ( simplePerlin2D74 * _Noise ) + (texCoord38*1.0 + -( _Noise + (0.5 + (_Noise - 0.0) * (0.25 - 0.5) / (0.5 - 0.0)) )) ) ) );
-				float smoothstepResult42 = smoothstep( ( 0.5 + -_Explosion ) , ( 0.51 + -_Explosion ) , temp_output_43_0);
-				float smoothstepResult49 = smoothstep( ( 0.6 + -_Explosion ) , ( 0.61 + -_Explosion ) , temp_output_43_0);
+				float smoothstepResult42 = smoothstep( ( 0.5 + -(-0.5 + (IN.ase_color.b - 0.0) * (0.4 - -0.5) / (1.0 - 0.0)) ) , ( 0.51 + -(-0.5 + (IN.ase_color.b - 0.0) * (0.4 - -0.5) / (1.0 - 0.0)) ) , temp_output_43_0);
+				float smoothstepResult49 = smoothstep( ( 0.6 + -(-0.5 + (IN.ase_color.b - 0.0) * (0.4 - -0.5) / (1.0 - 0.0)) ) , ( 0.61 + -(-0.5 + (IN.ase_color.b - 0.0) * (0.4 - -0.5) / (1.0 - 0.0)) ) , temp_output_43_0);
 				
-				float4 Color = ( ( ( _Color * _HDR ) * saturate( ( smoothstepResult18 * _Alpha ) ) ) * ( smoothstepResult42 - smoothstepResult49 ) );
+				float4 Color = ( ( ( _Color * _HDR ) * saturate( ( smoothstepResult18 * _Alpha ) ) ) * ( ( smoothstepResult42 - smoothstepResult49 ) + 0.0 ) );
 				half4 outColor = _SelectionID;
 				return outColor;
 			}
@@ -765,7 +770,7 @@ Shader "VFX_Explosion_Sang"
 }
 /*ASEBEGIN
 Version=19801
-Node;AmplifyShaderEditor.RangedFloatNode;77;-1728,464;Inherit;False;Property;_Noise;Noise;5;0;Create;True;0;0;0;False;0;False;0.247094;0.247094;0;0.5;0;1;FLOAT;0
+Node;AmplifyShaderEditor.RangedFloatNode;77;-1728,464;Inherit;False;Property;_Noise;Noise;4;0;Create;True;0;0;0;False;0;False;0.247094;0.08;0;0.5;0;1;FLOAT;0
 Node;AmplifyShaderEditor.TFHCRemapNode;80;-1504,960;Inherit;False;5;0;FLOAT;0;False;1;FLOAT;0;False;2;FLOAT;0.5;False;3;FLOAT;0.5;False;4;FLOAT;0.25;False;1;FLOAT;0
 Node;AmplifyShaderEditor.TextureCoordinatesNode;38;-1424,656;Inherit;False;0;-1;2;3;2;SAMPLER2D;;False;0;FLOAT2;1,1;False;1;FLOAT2;0,0;False;5;FLOAT2;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.SimpleAddOpNode;78;-1312,848;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;0.5;False;1;FLOAT;0
@@ -773,28 +778,30 @@ Node;AmplifyShaderEditor.NegateNode;79;-1120,816;Inherit;False;1;0;FLOAT;0;False
 Node;AmplifyShaderEditor.NoiseGeneratorNode;74;-1168,320;Inherit;True;Simplex2D;True;False;2;0;FLOAT2;0,0;False;1;FLOAT;5;False;1;FLOAT;0
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;76;-864,400;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.ScaleAndOffsetNode;40;-1008,656;Inherit;False;3;0;FLOAT2;0,0;False;1;FLOAT;1;False;2;FLOAT;-0.67;False;1;FLOAT2;0
+Node;AmplifyShaderEditor.VertexColorNode;82;-1424,1216;Inherit;False;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.TextureCoordinatesNode;12;-1152,48;Inherit;True;0;-1;2;3;2;SAMPLER2D;;False;0;FLOAT2;1,1;False;1;FLOAT2;0,0;False;5;FLOAT2;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.SimpleAddOpNode;75;-688,480;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT2;0,0;False;1;FLOAT2;0
-Node;AmplifyShaderEditor.RangedFloatNode;51;-912,1056;Inherit;False;Property;_Explosion;Explosion;4;0;Create;True;0;0;0;False;0;False;-0.05603248;-0.161;-0.5;0.4;0;1;FLOAT;0
+Node;AmplifyShaderEditor.TFHCRemapNode;81;-992,1072;Inherit;False;5;0;FLOAT;0;False;1;FLOAT;0;False;2;FLOAT;1;False;3;FLOAT;-0.5;False;4;FLOAT;0.4;False;1;FLOAT;0
 Node;AmplifyShaderEditor.SamplerNode;10;-880,32;Inherit;True;Property;_TextureSample0;Texture Sample 0;0;0;Create;True;0;0;0;False;0;False;-1;d723099a9a8293447a0e098a1e102056;d723099a9a8293447a0e098a1e102056;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;6;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4;FLOAT3;5
 Node;AmplifyShaderEditor.LengthOpNode;41;-560,624;Inherit;True;1;0;FLOAT2;0,0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.NegateNode;62;-608,1040;Inherit;True;1;0;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.SmoothstepOpNode;18;-480,96;Inherit;True;3;0;FLOAT;0;False;1;FLOAT;0;False;2;FLOAT;0.05;False;1;FLOAT;0
-Node;AmplifyShaderEditor.RangedFloatNode;14;-352,416;Inherit;False;Property;_Alpha;Alpha;2;0;Create;True;0;0;0;False;0;False;1;2;0;0;0;1;FLOAT;0
+Node;AmplifyShaderEditor.RangedFloatNode;14;-352,416;Inherit;False;Property;_Alpha;Alpha;3;0;Create;True;0;0;0;False;0;False;1;1;0;0;0;1;FLOAT;0
 Node;AmplifyShaderEditor.OneMinusNode;43;-320,656;Inherit;False;1;0;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.SimpleAddOpNode;60;-336,768;Inherit;False;2;2;0;FLOAT;0.5;False;1;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.SimpleAddOpNode;59;-352,880;Inherit;False;2;2;0;FLOAT;0.51;False;1;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.SimpleAddOpNode;58;-336,992;Inherit;False;2;2;0;FLOAT;0.6;False;1;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.SimpleAddOpNode;57;-352,1104;Inherit;False;2;2;0;FLOAT;0.61;False;1;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.ColorNode;11;-624,-272;Inherit;False;Property;_Color;Color;1;0;Create;True;0;0;0;False;0;False;0,1,0.02366424,0;1,0,0.05709312,1;True;True;0;6;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4;FLOAT3;5
-Node;AmplifyShaderEditor.RangedFloatNode;16;-400,-48;Inherit;False;Property;_HDR;HDR;3;0;Create;True;0;0;0;False;0;False;1;1;0;0;0;1;FLOAT;0
+Node;AmplifyShaderEditor.ColorNode;11;-624,-272;Inherit;False;Property;_Color;Color;1;0;Create;True;0;0;0;False;0;False;0,1,0.02366424,0;1,0,0.05882349,1;True;True;0;6;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4;FLOAT3;5
+Node;AmplifyShaderEditor.RangedFloatNode;16;-400,-48;Inherit;False;Property;_HDR;HDR;2;0;Create;True;0;0;0;False;0;False;1;2;0;0;0;1;FLOAT;0
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;36;-240,224;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.SmoothstepOpNode;49;-96,912;Inherit;True;3;0;FLOAT;0;False;1;FLOAT;0.6;False;2;FLOAT;0.61;False;1;FLOAT;0
 Node;AmplifyShaderEditor.SmoothstepOpNode;42;-96,640;Inherit;True;3;0;FLOAT;0;False;1;FLOAT;0.5;False;2;FLOAT;0.51;False;1;FLOAT;0
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;15;-240,-160;Inherit;False;2;2;0;COLOR;0,0,0,0;False;1;FLOAT;0;False;1;COLOR;0
 Node;AmplifyShaderEditor.SaturateNode;37;-128,192;Inherit;False;1;0;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.SimpleSubtractOpNode;50;411.8652,850.1119;Inherit;True;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.SimpleSubtractOpNode;50;240,832;Inherit;True;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;13;48,16;Inherit;True;2;2;0;COLOR;0,0,0,0;False;1;FLOAT;0;False;1;COLOR;0
+Node;AmplifyShaderEditor.SimpleAddOpNode;93;432,688;Inherit;True;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;61;617.683,441.2741;Inherit;True;2;2;0;COLOR;0,0,0,0;False;1;FLOAT;0;False;1;COLOR;0
 Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;33;224,-16;Float;False;False;-1;3;UnityEditor.ShaderGraph.GenericShaderGraphMaterialGUI;0;1;New Amplify Shader;cf964e524c8e69742b1d21fbe2ebcc4a;True;Sprite Unlit Forward;0;1;Sprite Unlit Forward;0;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;2;False;;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;3;RenderPipeline=UniversalPipeline;RenderType=Transparent=RenderType;Queue=Transparent=Queue=0;True;0;True;12;all;0;False;True;2;5;False;;10;False;;3;1;False;;10;False;;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;True;True;True;True;0;False;;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;2;False;;True;3;False;;True;True;0;False;;0;False;;True;1;LightMode=UniversalForward;False;False;0;;0;0;Standard;0;False;0
 Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;34;224,-16;Float;False;False;-1;3;UnityEditor.ShaderGraph.GenericShaderGraphMaterialGUI;0;1;New Amplify Shader;cf964e524c8e69742b1d21fbe2ebcc4a;True;SceneSelectionPass;0;2;SceneSelectionPass;0;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;2;False;;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;3;RenderPipeline=UniversalPipeline;RenderType=Transparent=RenderType;Queue=Transparent=Queue=0;True;0;True;12;all;0;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;2;False;;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;1;LightMode=SceneSelectionPass;False;False;0;;0;0;Standard;0;False;0
@@ -811,9 +818,10 @@ WireConnection;40;0;38;0
 WireConnection;40;2;79;0
 WireConnection;75;0;76;0
 WireConnection;75;1;40;0
+WireConnection;81;0;82;3
 WireConnection;10;1;12;0
 WireConnection;41;0;75;0
-WireConnection;62;0;51;0
+WireConnection;62;0;81;0
 WireConnection;18;0;10;1
 WireConnection;43;0;41;0
 WireConnection;60;1;62;0
@@ -835,8 +843,9 @@ WireConnection;50;0;42;0
 WireConnection;50;1;49;0
 WireConnection;13;0;15;0
 WireConnection;13;1;37;0
+WireConnection;93;0;50;0
 WireConnection;61;0;13;0
-WireConnection;61;1;50;0
+WireConnection;61;1;93;0
 WireConnection;32;1;61;0
 ASEEND*/
-//CHKSM=191D9EDE4D47E7645C2F81869BE687186066D7C2
+//CHKSM=0677113B007412D555A9D998DBDEC26F1347215E
