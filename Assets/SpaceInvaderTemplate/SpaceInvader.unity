@@ -438,7 +438,7 @@ MonoBehaviour:
   OnStop:
     m_PersistentCalls:
       m_Calls: []
-  Player: {fileID: 582271453}
+  Player: {fileID: 582271454}
   Wave: {fileID: 1833304614}
   BackGroundScroll: {fileID: 867322337}
 --- !u!1 &495127405

@@ -24,6 +24,8 @@ public class Player : MonoBehaviour
 
     private float BaseScaleX;
     private float BaseScaleY;
+    [SerializeField] private float ScaleMutiplicatorHitX = 1.5f;
+    [SerializeField] private float ScaleMutiplicatorHitY = 1.5f;
 
     private float elapsedWindup = 0f;
     private float lastShootTimestamp = Mathf.NegativeInfinity;
@@ -87,9 +89,9 @@ public class Player : MonoBehaviour
 
     private void AnimShoot()
     {
-        transform.DOScaleX(this.transform.localScale.x * 2, 0);
+        transform.DOScaleX(this.transform.localScale.x * ScaleMutiplicatorHitX, 0);
         transform.DOScaleX(BaseScaleX, shootCooldown);
-        transform.DOScaleY(this.transform.localScale.y / 2, 0);
+        transform.DOScaleY(this.transform.localScale.y / ScaleMutiplicatorHitY, 0);
         transform.DOScaleY(BaseScaleY, shootCooldown);
     }
 

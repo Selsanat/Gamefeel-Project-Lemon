@@ -17,6 +17,7 @@ public class EventsManager : MonoBehaviour
     public UnityEvent OnShoot;
     public UnityEvent OnMove;
     public UnityEvent OnStop;
+    public UnityEvent OnEnnemyHit;
 
     public Player Player;
     public Wave Wave;
@@ -33,6 +34,7 @@ public class EventsManager : MonoBehaviour
         OnShoot.AddListener(OnShootBehaviour);
         OnMove.AddListener(OnMoveBehavior);
         OnStop.AddListener(OnStopBehavior);
+        OnEnnemyHit.AddListener(OnEnnemyHitBehavior);
         OnGameStart.Invoke();
     }
 
@@ -77,6 +79,11 @@ public class EventsManager : MonoBehaviour
         CameraManager instance = CameraManager.instance;
         if (DOTween.IsTweening(Camera.main.transform)) return;
         Camera.main.transform.DOShakePosition(instance.ShootShakeDuration, instance.ShootShakePower);
+    }
+
+    private void OnEnnemyHitBehavior()
+    {
+        SoundManager.instance.PlayClip("ChickPiou");
     }
 
     public static EventsManager Instance
