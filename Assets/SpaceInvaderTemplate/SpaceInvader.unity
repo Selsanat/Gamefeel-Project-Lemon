@@ -1177,6 +1177,126 @@ MonoBehaviour:
     playOneAfterAnother: 0
     delay: 0
     source: {fileID: 0}
+  - name: ChickPiou
+    clips:
+    - {fileID: 8300000, guid: 110925cf62e326049bceac37c62bd700, type: 3}
+    - {fileID: 8300000, guid: a3e4186a27f1f914aa7d7e5b8b4eb839, type: 3}
+    - {fileID: 8300000, guid: 37cfe87abb5b4424aa1de11d6f46a7b9, type: 3}
+    clip: {fileID: 8300000, guid: e96553ab9f8950d4995c87a2ce59f4f3, type: 3}
+    volume: 0.5
+    pitch: 1
+    pitchVariation: 2
+    loop: 0
+    Oneshot: 1
+    playeOnAwake: 0
+    playOneAfterAnother: 0
+    delay: 0
+    source: {fileID: 0}
+  - name: Engine
+    clips:
+    - {fileID: 8300000, guid: 110925cf62e326049bceac37c62bd700, type: 3}
+    - {fileID: 8300000, guid: a3e4186a27f1f914aa7d7e5b8b4eb839, type: 3}
+    - {fileID: 8300000, guid: 37cfe87abb5b4424aa1de11d6f46a7b9, type: 3}
+    clip: {fileID: 8300000, guid: bf4ac815a447a83409384fca7b0677f8, type: 3}
+    volume: 0.5
+    pitch: 1
+    pitchVariation: 0
+    loop: 1
+    Oneshot: 1
+    playeOnAwake: 0
+    playOneAfterAnother: 0
+    delay: 0
+    source: {fileID: 0}
+  - name: Player Death
+    clips:
+    - {fileID: 8300000, guid: 110925cf62e326049bceac37c62bd700, type: 3}
+    - {fileID: 8300000, guid: a3e4186a27f1f914aa7d7e5b8b4eb839, type: 3}
+    - {fileID: 8300000, guid: 37cfe87abb5b4424aa1de11d6f46a7b9, type: 3}
+    clip: {fileID: 8300000, guid: 5380330021c5b244c8c0ef3f6f30f022, type: 3}
+    volume: 0.5
+    pitch: 1
+    pitchVariation: 0
+    loop: 0
+    Oneshot: 1
+    playeOnAwake: 0
+    playOneAfterAnother: 0
+    delay: 0
+    source: {fileID: 0}
+  - name: ChickDeath
+    clips:
+    - {fileID: 8300000, guid: 110925cf62e326049bceac37c62bd700, type: 3}
+    - {fileID: 8300000, guid: a3e4186a27f1f914aa7d7e5b8b4eb839, type: 3}
+    - {fileID: 8300000, guid: 37cfe87abb5b4424aa1de11d6f46a7b9, type: 3}
+    clip: {fileID: 8300000, guid: db44c26fe091a5e4aad44fad5c915825, type: 3}
+    volume: 0.5
+    pitch: 1
+    pitchVariation: 0.5
+    loop: 0
+    Oneshot: 1
+    playeOnAwake: 0
+    playOneAfterAnother: 0
+    delay: 0
+    source: {fileID: 0}
+  - name: PopCornPop
+    clips:
+    - {fileID: 8300000, guid: 110925cf62e326049bceac37c62bd700, type: 3}
+    - {fileID: 8300000, guid: a3e4186a27f1f914aa7d7e5b8b4eb839, type: 3}
+    - {fileID: 8300000, guid: 37cfe87abb5b4424aa1de11d6f46a7b9, type: 3}
+    clip: {fileID: 8300000, guid: aeff54e72f20c674990984be375a9090, type: 3}
+    volume: 0.5
+    pitch: 1
+    pitchVariation: 1
+    loop: 0
+    Oneshot: 1
+    playeOnAwake: 0
+    playOneAfterAnother: 0
+    delay: 0
+    source: {fileID: 0}
+  - name: BGMGameplay
+    clips:
+    - {fileID: 8300000, guid: 110925cf62e326049bceac37c62bd700, type: 3}
+    - {fileID: 8300000, guid: a3e4186a27f1f914aa7d7e5b8b4eb839, type: 3}
+    - {fileID: 8300000, guid: 37cfe87abb5b4424aa1de11d6f46a7b9, type: 3}
+    clip: {fileID: 8300000, guid: 0e20c202ba3b8f34aacc32adb2932bc2, type: 3}
+    volume: 0.7
+    pitch: 1
+    pitchVariation: 0
+    loop: 1
+    Oneshot: 0
+    playeOnAwake: 0
+    playOneAfterAnother: 0
+    delay: 0
+    source: {fileID: 0}
+  - name: BGMVictory
+    clips:
+    - {fileID: 8300000, guid: 110925cf62e326049bceac37c62bd700, type: 3}
+    - {fileID: 8300000, guid: a3e4186a27f1f914aa7d7e5b8b4eb839, type: 3}
+    - {fileID: 8300000, guid: 37cfe87abb5b4424aa1de11d6f46a7b9, type: 3}
+    clip: {fileID: 8300000, guid: b70946882904b0547a926e20c4273e8b, type: 3}
+    volume: 0.7
+    pitch: 1
+    pitchVariation: 0
+    loop: 1
+    Oneshot: 1
+    playeOnAwake: 0
+    playOneAfterAnother: 0
+    delay: 0
+    source: {fileID: 0}
+  - name: BGMDefeat
+    clips:
+    - {fileID: 8300000, guid: 110925cf62e326049bceac37c62bd700, type: 3}
+    - {fileID: 8300000, guid: a3e4186a27f1f914aa7d7e5b8b4eb839, type: 3}
+    - {fileID: 8300000, guid: 37cfe87abb5b4424aa1de11d6f46a7b9, type: 3}
+    clip: {fileID: 8300000, guid: 51bc660c15eabfb489ad5741ee9f8e85, type: 3}
+    volume: 0.7
+    pitch: 1
+    pitchVariation: 0
+    loop: 0
+    Oneshot: 1
+    playeOnAwake: 0
+    playOneAfterAnother: 0
+    delay: 0
+    source: {fileID: 0}
   bgMusics: []
 --- !u!1 &1677758674
 GameObject:
