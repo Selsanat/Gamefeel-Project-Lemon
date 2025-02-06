@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1727431462037305599}
   - component: {fileID: 9109969425864263349}
   - component: {fileID: 1286698669282929100}
+  - component: {fileID: 4200438061163048112}
   m_Layer: 0
   m_Name: Invader
   m_TagString: Untagged
@@ -102,8 +103,18 @@ MonoBehaviour:
   bulletPrefab: {fileID: 7369880722360228486, guid: 47d2029f071079c4a98ac35325b21f24, type: 3}
   shootAt: {fileID: 8808591723042360307}
   collideWithTag: Player
-  Pv: 100
   Dommage: 10
+  Pv: 100
+  PvMax: 100
+  PvPourcentLow: 30
+  PvPourcentMid: 50
+  GrowMid: 1.5
+  GrowLow: 2.5
+  GrowSpeed: 1
+  DurationScaleHit: 0.2
+  ScaleMutiplicatorHitY: 2
+  ScaleMutiplicatorHitX: 2
+  BasePosition: {x: 0, y: 0, z: 0}
 --- !u!61 &1286698669282929100
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -149,6 +160,27 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!95 &4200438061163048112
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7429291776354201643}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 283dcb6f93aa00c4bb41b275f4261b00, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &9027937785671472930
 GameObject:
   m_ObjectHideFlags: 0
