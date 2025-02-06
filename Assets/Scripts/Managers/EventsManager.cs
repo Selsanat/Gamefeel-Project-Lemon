@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 public class EventsManager : MonoBehaviour
 {
@@ -23,6 +24,10 @@ public class EventsManager : MonoBehaviour
     public Player Player;
     public Wave Wave;
     public BackGroundScroll BackGroundScroll;
+
+    public Image UIbg;
+    public Image UIdefeat;
+    public Image UIvictory;
 
 
     // Print something when events are called
@@ -57,6 +62,9 @@ public class EventsManager : MonoBehaviour
         SoundManager.instance.Pauseclip("BGMGameplay");
         SoundManager.instance.PlayClip("BGMVictory");
         SoundManager.instance.Pauseclip("Engine");
+
+        UIbg.DOFade(1, 0.5f);
+        UIvictory.DOFade(1, 0.5f);
     }
     private void OnEnnemyKilledBehaviour()
     {
@@ -141,7 +149,10 @@ public class EventsManager : MonoBehaviour
         CameraManager instance = CameraManager.instance;
         Camera.main.transform.DOShakePosition(instance.PlayerDeathShakeDuration, instance.PlayerDeathShakePower, 10);
         yield return new WaitForSeconds(2f);
-        Time.timeScale = 0;
+        UIbg.DOFade(1, 0.5f);
+        UIdefeat.DOFade(1, 0.5f);
+        //Time.timeScale = 0;
         SoundManager.instance.PlayClip("BGMDefeat");
+        
     }
 }
