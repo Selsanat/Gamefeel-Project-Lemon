@@ -114,8 +114,8 @@ MonoBehaviour:
   GrowLow: 2.5
   GrowSpeed: 1
   DurationScaleHit: 0.2
-  ScaleMutiplicatorHitY: 2
-  ScaleMutiplicatorHitX: 2
+  ScaleMutiplicatorHitY: 20
+  ScaleMutiplicatorHitX: 20
   BasePosition: {x: 0, y: 0, z: 0}
   Poussin: {fileID: 9004746708240018140, guid: dacbc90fa2cee1047b2f7560a98f765e, type: 3}
   animator: {fileID: 4200438061163048112}
