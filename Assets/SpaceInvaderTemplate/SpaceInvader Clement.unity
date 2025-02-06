@@ -588,7 +588,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   duration: 0.5
-  strength: 1
+  strength: 0.5
   vibrato: 10
   randomness: 90
 --- !u!1 &879569042

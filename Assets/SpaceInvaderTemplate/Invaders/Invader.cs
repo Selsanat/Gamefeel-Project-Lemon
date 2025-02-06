@@ -33,6 +33,7 @@ public class Invader : MonoBehaviour
     private float BaseScaleX;
     private float BaseScaleY;
     private bool isAlive = true;
+    [SerializeField] private GameObject Poussin;
 
     
     enum InvaderState
@@ -90,9 +91,11 @@ public class Invader : MonoBehaviour
         }
         if(Pv <= 0)
         {
+            Debug.Log("dead");
             cameraShake.Shake();
             FindObjectOfType<FlashInvader>().Flash();
             this.GetComponent<SpriteRenderer>().enabled = false;
+            Instantiate(Poussin, new Vector3(transform.position.x,transform.position.y , 0.28f), Quaternion.identity, new RectTransform());
             isAlive = false;
         }
     }
