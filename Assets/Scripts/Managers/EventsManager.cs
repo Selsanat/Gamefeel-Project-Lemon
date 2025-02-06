@@ -15,6 +15,8 @@ public class EventsManager : MonoBehaviour
     public UnityEvent OnGameWin;
     public UnityEvent OnEnnemyKilled;
     public UnityEvent OnShoot;
+    public UnityEvent OnMove;
+    public UnityEvent OnStop;
 
 
     // Print something when events are called
@@ -25,26 +27,41 @@ public class EventsManager : MonoBehaviour
         OnGameWin.AddListener(OnGameWinBehaviour);
         OnEnnemyKilled.AddListener(OnEnnemyKilledBehaviour);    
         OnShoot.AddListener(OnShootBehaviour);
+        OnMove.AddListener(OnMoveBehavior);
+        OnStop.AddListener(OnStopBehavior);
         OnGameStart.Invoke();
     }
 
     private void OnGameStartBehaviour()
     {
         SoundManager.instance.PlayClip("BGMGameplay");
+        SoundManager.instance.PlayClip("Engine");
     }
     private void OnGameOverBehaviour()
     {
         SoundManager.instance.Pauseclip("BGMGameplay");
+        SoundManager.instance.Pauseclip("Engine");
         SoundManager.instance.PlayClip("BGMDefeat");
     }
     private void OnGameWinBehaviour()
     {
         SoundManager.instance.Pauseclip("BGMGameplay");
         SoundManager.instance.PlayClip("BGMVictory");
+        SoundManager.instance.Pauseclip("Engine");
     }
     private void OnEnnemyKilledBehaviour()
     {
         SoundManager.instance.PlayClip("ChickDeath");
+    }
+
+    private void OnMoveBehavior()
+    {
+        SoundManager.instance.ChangePitch("Engine", 0.5f);
+    }
+
+    private void OnStopBehavior()
+    {
+        SoundManager.instance.ChangePitch("Engine", 0f);
     }
 
     private void OnShootBehaviour()

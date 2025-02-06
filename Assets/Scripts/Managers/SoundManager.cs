@@ -234,6 +234,21 @@ public class SoundManager : MonoBehaviour
         }
         s.source.Stop();
     }
+
+    public void ChangePitch(string name, float newPitch)
+    {
+        if (name == "")
+        {
+            return;
+        }
+        Sounds s = Array.Find(sounds, sound => sound.name == name);
+        if (s == null || s.clip == null)
+        {
+            Debug.LogWarning("The clip " + name + " doesn't exist !");
+            return;
+        }
+        s.source.pitch = s.pitch + newPitch;
+    }
 }
 
 [System.Serializable]

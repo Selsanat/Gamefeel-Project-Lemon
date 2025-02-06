@@ -34,8 +34,11 @@ public class Player : MonoBehaviour
     void UpdateMovement()
     {
         float move = Input.GetAxis("Horizontal");
-        if (Mathf.Abs(move) < deadzone) { return; }
-
+        if (Mathf.Abs(move) < deadzone) {
+            EventsManager.Instance.OnStop.Invoke();
+            return; 
+        }
+        EventsManager.Instance.OnMove.Invoke();
         move = Mathf.Sign(move);
         float delta = move * speed * Time.deltaTime;
         transform.position = GameManager.Instance.KeepInBounds(transform.position + Vector3.right * delta);

@@ -432,6 +432,12 @@ MonoBehaviour:
   OnShoot:
     m_PersistentCalls:
       m_Calls: []
+  OnMove:
+    m_PersistentCalls:
+      m_Calls: []
+  OnStop:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &495127405
 GameObject:
   m_ObjectHideFlags: 0
@@ -1253,11 +1259,11 @@ MonoBehaviour:
     - {fileID: 8300000, guid: a3e4186a27f1f914aa7d7e5b8b4eb839, type: 3}
     - {fileID: 8300000, guid: 37cfe87abb5b4424aa1de11d6f46a7b9, type: 3}
     clip: {fileID: 8300000, guid: bf4ac815a447a83409384fca7b0677f8, type: 3}
-    volume: 0.5
+    volume: 0.6
     pitch: 1
     pitchVariation: 0
     loop: 1
-    Oneshot: 1
+    Oneshot: 0
     playeOnAwake: 0
     playOneAfterAnother: 0
     delay: 0
